@@ -42,10 +42,10 @@
   #ledger.active .ledger-filters>div:after{font-weight:bold}
 }
 </style></head><body>
-<div id="login"><div class="loginbox"><h2>🔐 The Farmer by Layesh Collection</h2<div id="loginMode"></div><label>Password</label><input id="loginPass" type="password" autocomplete="current-password"><label id="loginPass2Label" style="display:none">Confirm Password</label><input id="loginPass2" type="password" style="display:none" autocomplete="new-password"><button class="btn primary" style="width:100%;margin-top:14px" onclick="authSubmit()" id="authBtn">Login</button><div class="hint">This is an app-level password stored on this device. It is not a replacement for server-side authentication.</div></div></div>
+<div id="login"><div class="loginbox"><h2>🔐 The Farmer by Layesh Collection</h2><div id="loginMode"></div><label>Password</label><input id="loginPass" type="password" autocomplete="current-password"><label id="loginPass2Label" style="display:none">Confirm Password</label><input id="loginPass2" type="password" style="display:none" autocomplete="new-password"><button class="btn primary" style="width:100%;margin-top:14px" onclick="authSubmit()" id="authBtn">Login</button><button class="btn secondary" style="width:100%;margin-top:8px" onclick="beginPasswordReset()" id="resetPassBtn">Reset / Create New Password</button><div class="hint">This is an app-level password stored on this device. It is not a replacement for server-side authentication.</div></div></div>
 <header><div class="rowhead"><div><h1>🌱 The Farmer by Layesh Collection</h1><div class="sub">Journal • Ledger • Trial Balance • Income Statement • Balance Sheet • Budget</div></div><button class="btn secondary" onclick="logout()">🔒 Lock</button></div></header><main>
 <section id="home" class="page active"><div class="card"><div class="rowhead"><h2>Dashboard</h2><span class="period" id="dashPeriod">YTD</span></div><div class="metricgrid dashboard-balances" style="grid-template-columns:repeat(2,minmax(0,1fr));margin:12px 0"><div class="metric"><span>Total Assets</span><b id="dashTotalAssets">0.00</b></div><div class="metric"><span>Total Liabilities &amp; Equity</span><b id="dashTotalLiabEquity">0.00</b></div></div><div class="metricgrid dashboard-income-summary" style="grid-template-columns:repeat(3,minmax(0,1fr));margin:12px 0"><div class="metric income-metric"><span>Total Income</span><b id="dashTotalIncome">0.00</b></div><div class="metric expense-metric"><span>Total Expenses</span><b id="dashTotalExpenses">0.00</b></div><div class="metric"><span>Profit / Loss</span><b id="dashProfitLoss">0.00</b></div></div><div class="dashboardcontrols"><div><label>Project</label><select id="dy" onchange="renderDashboardCharts()"></select></div></div><div class="metricgrid dashboard-project-summary" style="grid-template-columns:repeat(3,minmax(0,1fr));margin:12px 0"><div class="metric income-metric"><span>Selected Project Income</span><b id="dashProjectIncome">0.00</b></div><div class="metric expense-metric"><span>Selected Project Expenses</span><b id="dashProjectExpenses">0.00</b></div><div class="metric"><span>Project Profit / Loss</span><b id="dashProjectPL">0.00</b></div></div></div><div class="card"><div class="actions"><button class="btn primary" onclick="show('journal')">＋ New Journal</button><button class="btn secondary" onclick="show('ledger')">📖 Ledger</button></div></div>
-<div class="chartgrid"><div class="chartbox"><h3>YTD / Selected Month Income and Expenses</h3><div class="piewrap"><div id="incomePie" class="pie"></div><div id="incomeLegend" class="legend"></div></div></div><div class="chartbox"><h3>YTD / Selected Month Expenses based on Accounts Type</h3><div class="piewrap"><div id="expensePie" class="pie"></div><div id="expenseLegend" class="legend"></div></div></div><div class="chartbox"><h3>How I used my total income for Expenses, Investment and Saving.</h3><div class="piewrap"><div id="typeIncPie" class="pie"></div><div id="typeIncLegend" class="legend"></div></div></div><div class="chartbox"><h3>YTD / Selected Month Expenses</h3><div class="piewrap"><div id="typeExpPie" class="pie"></div><div id="typeExpLegend" class="legend"></div></div></div><div class="chartbox" style="grid-column:1/-1"><div class="rowhead"><h3>Individual Accounts</h3><div style="width:220px"><select id="histType" onchange="renderDashboardCharts()"></select></div></div><div id="histBars" class="bars"></div></div></div></section>
+<div class="chartgrid"><div class="chartbox"><h3>YTD / Selected Month Income and Expenses</h3><div class="piewrap"><div id="incomePie" class="pie"></div><div id="incomeLegend" class="legend"></div></div></div><div class="chartbox"><h3>Expenses by Account Name</h3><div class="piewrap"><div id="expensePie" class="pie"></div><div id="expenseLegend" class="legend"></div></div></div><div class="chartbox"><h3>YTD / Selected Month Expenses</h3><div class="piewrap"><div id="typeExpPie" class="pie"></div><div id="typeExpLegend" class="legend"></div></div></div><div class="chartbox" style="grid-column:1/-1"><div class="rowhead"><h3>Account Name</h3><div style="width:220px"><label for="histType">Account Name Filter</label><select id="histType" onchange="renderDashboardCharts()"></select></div></div><div id="histBars" class="bars"></div></div></div></section>
 <section id="journal" class="page"><div class="card"><div class="rowhead"><h2>New Journal</h2><span class="badge" id="jvBadge"></span></div><div class="grid"><div><label>JV Number</label><input id="jv" readonly></div><div><label>Date</label><input id="jdate" type="date"></div></div><label>Description</label><textarea id="desc"></textarea><label>Reference</label><input id="ref"></div><div class="card"><div class="rowhead"><h2>Journal Lines</h2><button class="btn secondary" onclick="addLine()">＋ Add Line</button></div><div id="lines"></div><datalist id="projectOptions"></datalist><div class="totals jv-totals"><div class="total">Total Debit (LKR)<br><b id="td">0.00</b></div><div class="total">Total Credit (LKR)<br><b id="tc">0.00</b></div><div class="total">Difference (LKR)<br><b id="tDiff">0.00</b></div></div><div id="st" class="status bad">Debit and credit must balance</div><div class="actions"><button class="btn secondary" onclick="clearJournal()">Clear</button><button class="btn primary" onclick="postJournal()">💾 Post Journal</button></div></div></section>
 <section id="history" class="page">
 <div class="card"><div class="rowhead"><h2>Posted JV Review</h2><button class="btn secondary" onclick="clearJVReview()">Clear</button></div>
@@ -108,6 +108,7 @@ window.requestedChartColors=function(n){return Array.from({length:n},(_,i)=>wind
 const BASE=[];let accounts=JSON.parse(localStorage.getItem('accounts')||'null')||BASE;if(!Array.isArray(accounts))accounts=BASE;let currencies=JSON.parse(localStorage.getItem('currencies')||'null')||[{code:'LKR',rate:1},{code:'USD',rate:1},{code:'MVR',rate:1}];let journals=JSON.parse(localStorage.getItem('journals')||'[]');let budgets=JSON.parse(localStorage.getItem('budgets')||'[]');
 let projects=JSON.parse(localStorage.getItem('projects')||'[]');
 if(!Array.isArray(projects))projects=[];
+let editingProjectIndex=null;
 let nline=0;
 const $=id=>document.getElementById(id), esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
 let authMode='login';
@@ -137,9 +138,9 @@ function loadGoogleIdentity(){
 function backupPayload(){
   return {
     format:'MobileAccountingFullBackup',
-    schemaVersion:1,
+    schemaVersion:2,
     exportedAt:new Date().toISOString(),
-    accounts,currencies,journals,budgets
+    accounts,currencies,journals,budgets,projects
   };
 }
 async function deriveBackupKey(password,salt){
@@ -174,7 +175,8 @@ async function decryptBackup(blob,password){
   const key=await deriveBackupKey(password,base64ToBytes(env.salt));
   const plain=await crypto.subtle.decrypt({name:'AES-GCM',iv:base64ToBytes(env.iv)},key,base64ToBytes(env.data));
   const data=JSON.parse(new TextDecoder().decode(plain));
-  if(data.format!=='MobileAccountingFullBackup'||data.schemaVersion!==1||!Array.isArray(data.accounts)||!Array.isArray(data.journals)||!Array.isArray(data.currencies)||!Array.isArray(data.budgets))throw new Error('Backup content validation failed.');
+  if(data.format!=='MobileAccountingFullBackup'||![1,2].includes(data.schemaVersion)||!Array.isArray(data.accounts)||!Array.isArray(data.journals)||!Array.isArray(data.currencies)||!Array.isArray(data.budgets))throw new Error('Backup content validation failed.');
+   if(data.projects!==undefined&&!Array.isArray(data.projects))throw new Error('Backup project data validation failed.');
   return data;
 }
 function getDriveConfig(){
@@ -293,7 +295,7 @@ async function restoreFromDrive(){
     if(!confirm('Restore the latest Google Drive backup? This will replace the accounting data currently saved on this device.'))return;
     const response=await driveFetch('https://www.googleapis.com/drive/v3/files/'+encodeURIComponent(file.id)+'?alt=media');
     const data=await decryptBackup(await response.blob(),cfg.pass);
-    accounts=data.accounts;currencies=data.currencies;journals=data.journals;budgets=data.budgets;
+    accounts=data.accounts;currencies=data.currencies;journals=data.journals;budgets=data.budgets;projects=Array.isArray(data.projects)?data.projects:projects;
     persist();
     driveStatus('Restore completed. Your accounting data has been loaded on this device.',true);
     alert('Restore completed. The app will reload your accounting records.');
@@ -307,8 +309,9 @@ function initBackupPanel(){
   if(last&&$('driveLastBackup'))$('driveLastBackup').textContent='Last successful Drive backup: '+last;
 }
 
-function initAuth(){let h=localStorage.getItem('appPasswordHash'),salt=localStorage.getItem('appPasswordSalt');if(!h||!salt){authMode='setup';$('loginMode').innerHTML='<p>Create a password for this app.</p>';$('loginPass2Label').style.display='block';$('loginPass2').style.display='block';$('authBtn').textContent='Create Password'}else{$('loginMode').innerHTML='<p>Enter your password to unlock.</p>'}}
-async function authSubmit(){let p=$('loginPass').value;if(!p)return alert('Enter a password.');if(authMode==='setup'){let p2=$('loginPass2').value;if(p.length<6)return alert('Use at least 6 characters.');if(p!==p2)return alert('Passwords do not match.');let salt=crypto.randomUUID();localStorage.setItem('appPasswordSalt',salt);localStorage.setItem('appPasswordHash',await digestPassword(p,salt));sessionStorage.setItem('appUnlocked','1');$('login').style.display='none'}else{let salt=localStorage.getItem('appPasswordSalt'),h=await digestPassword(p,salt);if(h!==localStorage.getItem('appPasswordHash'))return alert('Incorrect password.');sessionStorage.setItem('appUnlocked','1');$('login').style.display='none'}}
+function initAuth(){let h=localStorage.getItem('appPasswordHash'),salt=localStorage.getItem('appPasswordSalt');$('loginPass').value='';$('loginPass2').value='';if(!h||!salt){authMode='setup';$('loginMode').innerHTML='<p>Create a new password for this device.</p><p class="hint">If this is a new device, restore your accounting backup from the Backup page after signing in.</p>';$('loginPass2Label').style.display='block';$('loginPass2').style.display='block';$('authBtn').textContent='Create Password'}else{authMode='login';$('loginMode').innerHTML='<p>Enter your password to unlock.</p>';$('loginPass2Label').style.display='none';$('loginPass2').style.display='none';$('authBtn').textContent='Login'}}
+function beginPasswordReset(){authMode='reset';$('loginMode').innerHTML='<p>Create a new password for this device. Your accounting data will not be deleted.</p>';$('loginPass').value='';$('loginPass2').value='';$('loginPass2Label').style.display='block';$('loginPass2').style.display='block';$('authBtn').textContent='Save New Password'}
+async function authSubmit(){let p=$('loginPass').value;if(!p)return alert('Enter a password.');if(authMode==='setup'||authMode==='reset'){let p2=$('loginPass2').value;if(p.length<6)return alert('Use at least 6 characters.');if(p!==p2)return alert('Passwords do not match.');let salt=crypto.randomUUID();localStorage.setItem('appPasswordSalt',salt);localStorage.setItem('appPasswordHash',await digestPassword(p,salt));sessionStorage.setItem('appUnlocked','1');$('login').style.display='none';$('loginPass').value='';$('loginPass2').value='';return}let salt=localStorage.getItem('appPasswordSalt'),h=await digestPassword(p,salt);if(h!==localStorage.getItem('appPasswordHash'))return alert('Incorrect password. If this is a new device, use Create Password or restore your data from Google Drive backup.');sessionStorage.setItem('appUnlocked','1');$('login').style.display='none'}
 function logout(){sessionStorage.removeItem('appUnlocked');$('loginPass').value='';$('loginPass2').value='';$('login').style.display='flex';initAuth()}
 function typeOpts(){let t=[...new Set(accounts.map(a=>a.accountType).filter(Boolean))].sort();return '<option value="">All Types</option>'+t.map(x=>'<option>'+esc(x)+'</option>').join('')}
 function filteredOpts(type,search){let q=(search||'').toLowerCase(),t=type||'';return '<option value="">Select account</option>'+accounts.filter(a=>(!t||a.accountType===t)&&(!q||a.name.toLowerCase().includes(q))).map(a=>'<option>'+esc(a.name)+'</option>').join('')}
@@ -466,27 +469,63 @@ function projectNames(){return [...new Set([...(projects||[]).map(p=>p.name),...
 function refreshProjectPickers(){let names=projectNames();['dy','im','trackingProject'].forEach(id=>{let el=$(id);if(!el)return;let old=el.value;el.innerHTML='<option value="">All Projects</option>'+names.map(p=>`<option value="${esc(p)}">${esc(p)}</option>`).join('');if(names.includes(old))el.value=old});let dl=$('projectOptions');if(dl)dl.innerHTML=names.map(p=>`<option value="${esc(p)}"></option>`).join('');document.querySelectorAll('.project-picker').forEach(sel=>{let val=sel.value;sel.innerHTML='<option value="">Select project</option>'+projectSelectOptions(val);sel.value=val})}
 function projectTotals(project){let inc=0,exp=0;journals.forEach(j=>j.lines.forEach(l=>{let x=lineForReport(j,l);if(project&&x.project!==project)return;let a=accounts.find(a=>a.name===x.account)||{},n=nature(a);if(n.includes('income'))inc+=x.creditLKR-x.debitLKR;else if(n.includes('expense'))exp+=x.debitLKR-x.creditLKR}));return {inc,exp,profit:inc-exp}}
 
-function clearProjectForm(){['projectName','projectArea','projectStatus','projectItems','projectStart'].forEach(id=>{if($(id))$(id).value=''})}
+function clearProjectForm(){
+  ['projectName','projectArea','projectStatus','projectItems','projectStart'].forEach(id=>{if($(id))$(id).value=''});
+  editingProjectIndex=null;
+  const saveBtn=document.querySelector('#subcodesheets button[onclick="saveProject()"]');
+  if(saveBtn)saveBtn.textContent='Save Project';
+}
 function saveProject(){
   const name=$('projectName').value.trim();
   if(!name){alert('Please enter a Project Name.');$('projectName').focus();return}
   const project={name,area:$('projectArea').value.trim(),status:$('projectStatus').value.trim(),items:$('projectItems').value.trim(),start:$('projectStart').value};
-  const existing=projects.findIndex(p=>String(p.name).toLowerCase()===name.toLowerCase());
-  const previous=existing>=0?projects[existing]:null;
+  const duplicate=projects.findIndex((p,i)=>i!==editingProjectIndex&&String(p.name||'').trim().toLowerCase()===name.toLowerCase());
+  if(duplicate>=0){
+    alert('This Project Name already exists. Please use a different name, or select Edit on the existing project to update its details.');
+    return;
+  }
+  const before=projects.map(p=>({...p}));
   try{
-    if(existing>=0)projects[existing]=project;else projects.push(project);
-    persist();clearProjectForm();refreshProjectPickers();renderProjectDetails();renderProjectTracking();
+    if(editingProjectIndex!==null&&projects[editingProjectIndex]){
+      projects[editingProjectIndex]=project;
+    }else{
+      editingProjectIndex=null;
+      projects.push(project);
+    }
+    persist();
+    clearProjectForm();
+    refreshProjectPickers();
+    renderProjectDetails();
+    renderProjectTracking();
     alert('Project saved successfully.');
   }catch(e){
-    if(existing>=0)projects[existing]=previous;else projects.pop();
+    projects=before;
     alert('Could not save project: '+e.message);
   }
 }
-function editProject(i){const p=projects[i];if(!p)return;$('projectName').value=p.name||'';$('projectArea').value=p.area||'';$('projectStatus').value=p.status||'';$('projectItems').value=p.items||'';$('projectStart').value=p.start||''}
-function deleteProject(i){const p=projects[i];if(!p)return;if(!confirm('Delete project '+p.name+'? Existing journal entries will not be deleted.'))return;projects.splice(i,1);persist();refreshProjectPickers();renderProjectDetails();renderProjectTracking()}
+function editProject(i){
+  const p=projects[i];if(!p)return;
+  editingProjectIndex=i;
+  $('projectName').value=p.name||'';
+  $('projectArea').value=p.area||'';
+  $('projectStatus').value=p.status||'';
+  $('projectItems').value=p.items||'';
+  $('projectStart').value=p.start||'';
+  const saveBtn=document.querySelector('#subcodesheets button[onclick="saveProject()"]');
+  if(saveBtn)saveBtn.textContent='Update Project';
+  $('projectName').focus();
+}
+function deleteProject(i){
+  const p=projects[i];if(!p)return;
+  if(!confirm('Delete project '+p.name+'? Existing journal entries will not be deleted.'))return;
+  projects.splice(i,1);
+  if(editingProjectIndex===i)clearProjectForm();
+  else if(editingProjectIndex!==null&&editingProjectIndex>i)editingProjectIndex--;
+  persist();refreshProjectPickers();renderProjectDetails();renderProjectTracking();
+}
 function renderProjectDetails(){
   const body=$('projectBody');if(!body)return;
-  body.innerHTML=projects.map((p,i)=>`<tr><td>${esc(p.name)}</td><td>${esc(p.area||'')}</td><td>${esc(p.status||'')}</td><td>${esc(p.items||'')}</td><td>${esc(p.start||'')}</td><td><button type="button" class="btn secondary" onclick="editProject(${i})">Edit</button> <button type="button" class="btn danger" onclick="deleteProject(${i})">Delete</button></td></tr>`).join('')||'<tr><td colspan="6">No projects added yet.</td></tr>';
+  body.innerHTML=projects.map((p,i)=>`<tr><td>${esc(p.name||'')}</td><td>${esc(p.area||'')}</td><td>${esc(p.status||'')}</td><td>${esc(p.items||'')}</td><td>${esc(p.start||'')}</td><td><button type="button" class="btn secondary" onclick="editProject(${i})">Edit</button> <button type="button" class="btn danger" onclick="deleteProject(${i})">Delete</button></td></tr>`).join('')||'<tr><td colspan="6">No projects added yet.</td></tr>';
 }
 
 function renderProjectTracking(){refreshProjectPickers();let project=$('trackingProject').value,p=projects.find(x=>x.name===project)||{},t=projectTotals(project),fmt=v=>Number(v||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});$('projectInfo').innerHTML=`<div class="tablewrap"><table><thead><tr><th>Project Name</th><th>Area</th><th>Status of Land</th><th>Items of Cultivating</th><th>Date of Start</th></tr></thead><tbody><tr><td>${esc(p.name||project||'All Projects')}</td><td>${esc(p.area||'')}</td><td>${esc(p.status||'')}</td><td>${esc(p.items||'')}</td><td>${esc(p.start||'')}</td></tr></tbody></table></div>`;$('projectIncome').textContent=fmt(t.inc);$('projectExpenses').textContent=fmt(t.exp);$('projectProfit').textContent=fmt(t.profit);let rows={};journals.forEach(j=>j.lines.forEach(l=>{let x=lineForReport(j,l);if(project&&x.project!==project)return;let a=accounts.find(a=>a.name===x.account)||{},k=[a.accountType||'',a.subAccount||'',x.account].join('|');rows[k]??={type:a.accountType||'',sub:a.subAccount||'',account:x.account,total:0};rows[k].total+=x.debitLKR-x.creditLKR}));$('projectSummaryBody').innerHTML=Object.values(rows).map(x=>`<tr><td>${esc(project||'All Projects')}</td><td>${esc(x.type)}</td><td>${esc(x.sub)}</td><td>${esc(x.account)}</td><td>${fmt(x.total)}</td></tr>`).join('')||'<tr><td colspan="5">No transactions for this project.</td></tr>'}
@@ -607,8 +646,8 @@ function renderPie(elId,legendId,data,colorMap){
   $(elId).style.background=total?`conic-gradient(${parts.join(',')})`:'#e2e8f0';
   $(legendId).innerHTML=html||'<span>No data</span>';
 }
-function populateHistTypes(){let sel=$('histType'),current=sel.value;let types=[...new Set(accounts.map(a=>reportAccountType(a)).map(x=>(x||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b));sel.innerHTML='<option value="">All Account Types</option>'+types.map(t=>`<option value="${esc(t)}">${esc(t)}</option>`).join('');if(types.includes(current))sel.value=current;else if(current==='')sel.value='';}
-function renderHistogram(year,month){let type=$('histType').value,m={};journals.forEach(j=>{if(!periodMatch(j.date,year,month))return;j.lines.forEach(l=>{let x=lineForReport(j,l),a=accounts.find(a=>a.name===x.account)||{},accountType=reportAccountType(a).trim();if(type&&accountType!==type)return;let n=nature(a),v=0;if(n.includes('income'))v=x.creditLKR-x.debitLKR;else if(n.includes('expense'))v=x.debitLKR-x.creditLKR;else v=Math.abs(x.debitLKR-x.creditLKR);if(v>0)m[x.account]=(m[x.account]||0)+v})});let arr=Object.entries(m).sort((a,b)=>b[1]-a[1]),max=Math.max(1,...arr.map(x=>x[1]));$('histBars').innerHTML=arr.map(([a,v])=>`<div class="barcol"><div class="barval">${v.toFixed(0)}</div><div class="bar" style="height:${Math.max(3,v/max*150)}px;background:#2563EB"></div><div>${esc(a)}</div></div>`).join('')||'<span class="muted">No data for this account type.</span>'}
+function populateHistTypes(){let sel=$('histType');if(!sel)return;let current=sel.value;let names=[...new Set(accounts.map(a=>a.name).filter(Boolean))].sort((a,b)=>a.localeCompare(b));sel.innerHTML='<option value="">All Account Names</option>'+names.map(n=>`<option value="${esc(n)}">${esc(n)}</option>`).join('');if(names.includes(current))sel.value=current;else sel.value='';}
+function renderHistogram(year,month){let accountName=$('histType')?.value||'',m={};journals.forEach(j=>{if(year&&!periodMatch(j.date,year,month))return;j.lines.forEach(l=>{let x=lineForReport(j,l);if(accountName&&x.account!==accountName)return;let a=accounts.find(a=>a.name===x.account)||{},n=nature(a),v=0;if(n.includes('income'))v=x.creditLKR-x.debitLKR;else if(n.includes('expense'))v=x.debitLKR-x.creditLKR;else v=Math.abs(x.debitLKR-x.creditLKR);if(v!==0)m[x.account]=(m[x.account]||0)+v})});let arr=Object.entries(m).sort((a,b)=>Math.abs(b[1])-Math.abs(a[1])),max=Math.max(1,...arr.map(x=>Math.abs(x[1])));$('histBars').innerHTML=arr.map(([a,v])=>`<div class="barcol"><div class="barval">${v.toLocaleString('en-US',{maximumFractionDigits:0})}</div><div class="bar" style="height:${Math.max(3,Math.abs(v)/max*150)}px;background:${v<0?'#C0504D':'#2563EB'}"></div><div>${esc(a)}</div></div>`).join('')||'<span class="muted">No account transactions for the selected period.</span>'}
 function dashboardBalanceTotals(){
   let assets=0,investments=0,liabilities=0,equity=0,income=0,expenses=0,y=currentYear();
   journals.forEach(j=>{if(!periodMatch(j.date,y,null))return;j.lines.forEach(l=>{
@@ -623,7 +662,20 @@ function dashboardBalanceTotals(){
   return {assets:assets+investments,liabilitiesEquity:liabilities+equity+(income-expenses)};
 }
 function balanceSheetTotals(){let assets=0,liabilities=0,equity=0,inc=0,exp=0;journals.forEach(j=>j.lines.forEach(l=>{let x=lineForReport(j,l),a=accounts.find(a=>a.name===x.account)||{},n=nature(a),bal=x.debitLKR-x.creditLKR;if(n.includes('asset')||n.includes('investment'))assets+=bal;else if(n.includes('liabilit'))liabilities-=bal;else if(n.includes('equity'))equity-=bal;else if(n.includes('income'))inc+=x.creditLKR-x.debitLKR;else if(n.includes('expense'))exp+=x.debitLKR-x.creditLKR}));return {assets,liabilities,equity,netIncome:inc-exp}}
-function renderDashboardCharts(){refreshProjectPickers();let project=$('dy').value,t=projectTotals(project),fmt=v=>Number(v||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});$('dashPeriod').textContent=project||'All Projects';let bs=balanceSheetTotals?balanceSheetTotals():null;if(bs){$('dashTotalAssets').textContent=fmt(bs.assets||0);$('dashTotalLiabEquity').textContent=fmt((bs.liabilities||0)+(bs.equity||0)+(bs.netIncome||0))}else{$('dashTotalAssets').textContent=fmt(0);$('dashTotalLiabEquity').textContent=fmt(0)}$('dashTotalIncome').textContent=fmt(t.inc);$('dashTotalExpenses').textContent=fmt(t.exp);$('dashProfitLoss').textContent=fmt(t.profit);$('dashProjectIncome').textContent=fmt(t.inc);$('dashProjectExpenses').textContent=fmt(t.exp);$('dashProjectPL').textContent=fmt(t.profit);let total=t.inc+t.exp,ip=total?t.inc/total*100:0;$('incomePie').style.background=`conic-gradient(#38bdf8 0 ${ip}%,#f97316 ${ip}% 100%)`;$('incomeLegend').innerHTML=`<div>Income: ${fmt(t.inc)}</div><div>Expenses: ${fmt(t.exp)}</div>`;$('expensePie').style.background='conic-gradient(#f97316 0 100%,#e2e8f0 100% 100%)';$('expenseLegend').innerHTML=`<div>Expenses: ${fmt(t.exp)}</div>`;$('typeIncPie').style.background=`conic-gradient(#22c55e 0 ${ip}%,#e2e8f0 ${ip}% 100%)`;$('typeIncLegend').innerHTML=`<div>Income: ${fmt(t.inc)}</div>`;$('typeExpPie').style.background='conic-gradient(#f97316 0 100%,#e2e8f0 100% 100%)';$('typeExpLegend').innerHTML=`<div>Expenses: ${fmt(t.exp)}</div>`;$('histBars').innerHTML=''}
+function renderDashboardCharts(){
+  refreshProjectPickers();populateHistTypes();
+  let project=$('dy').value,t=projectTotals(project),fmt=v=>Number(v||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+  $('dashPeriod').textContent=project||'All Projects';
+  let bs=balanceSheetTotals();$('dashTotalAssets').textContent=fmt(bs.assets);$('dashTotalLiabEquity').textContent=fmt(bs.liabilities+bs.equity+bs.netIncome);
+  $('dashTotalIncome').textContent=fmt(t.inc);$('dashTotalExpenses').textContent=fmt(t.exp);$('dashProfitLoss').textContent=fmt(t.profit);
+  $('dashProjectIncome').textContent=fmt(t.inc);$('dashProjectExpenses').textContent=fmt(t.exp);$('dashProjectPL').textContent=fmt(t.profit);
+  let total=Math.max(0,t.inc)+Math.max(0,t.exp),ip=total?Math.max(0,t.inc)/total*100:0;
+  $('incomePie').style.background=total?`conic-gradient(#38bdf8 0 ${ip}%,#f97316 ${ip}% 100%)`:'#e2e8f0';$('incomeLegend').innerHTML=`<div>Income: ${fmt(t.inc)}</div><div>Expenses: ${fmt(t.exp)}</div>`;
+  let expensesByAccount={};journals.forEach(j=>j.lines.forEach(l=>{let x=lineForReport(j,l),a=accounts.find(a=>a.name===x.account)||{},n=nature(a);if(n.includes('expense')){let v=x.debitLKR-x.creditLKR;if(v)expensesByAccount[x.account]=(expensesByAccount[x.account]||0)+v}}));
+  let ex=Object.entries(expensesByAccount).filter(x=>x[1]>0).sort((a,b)=>b[1]-a[1]),sumEx=ex.reduce((a,x)=>a+x[1],0),st=0,parts=[];ex.forEach((x,i)=>{let deg=sumEx?x[1]/sumEx*360:0,c=window.REQUESTED_CHART_PALETTE[i%window.REQUESTED_CHART_PALETTE.length];parts.push(`${c} ${st}deg ${st+deg}deg`);st+=deg});
+  $('expensePie').style.background=sumEx?`conic-gradient(${parts.join(',')})`:'#e2e8f0';$('expenseLegend').innerHTML=ex.map((x,i)=>`<div><i style="background:${window.REQUESTED_CHART_PALETTE[i%window.REQUESTED_CHART_PALETTE.length]}"></i>${esc(x[0])}: ${fmt(x[1])}</div>`).join('')||'<div>No expense data available.</div>';
+  renderHistogram(null,null);
+}
 function refresh(){
   let previousType=$('ltype').value,types=[...new Set(accounts.map(a=>reportAccountType(a)))].sort();
   $('ltype').innerHTML='<option value="">All Account Types</option>'+types.map(t=>'<option value="'+esc(t)+'">'+esc(t)+'</option>').join('');
@@ -631,5 +683,5 @@ function refresh(){
   let o='<option value="">Select account</option>'+accounts.map(a=>'<option value="'+esc(a.name)+'">'+esc(a.name)+'</option>').join('');
   $('lacct').innerHTML=o;$('ba').innerHTML=o;filterLedgerAccounts();renderHistory();renderJVReview();renderLedger();renderTB();renderIS();renderBS();renderBSValidation();renderCOA();renderCurrency();renderBudget();renderSubCodes();renderProjectDetails();refreshProjectPickers();renderProjectTracking();fillYears();renderDashboardCharts();}
 function exportCSV(){let rows=[['JV Number','Date','Description','Reference','Individual Account','Project Name','Currency','Rate To LKR','Side','Amount','Amount']];journals.forEach(j=>j.lines.forEach(l=>{let x=lineForReport(j,l);rows.push([j.jv,j.date,j.description,j.reference,x.account,x.subcode,x.currency,x.rate,x.side,x.amount,x.lkr])}));let s=rows.map(r=>r.map(x=>'"'+String(x??'').replaceAll('"','""')+'"').join(',')).join('\n');let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([s],{type:'text/csv'}));a.download='mobile_journal_export.csv';a.click()}
-initBackupPanel();initAuth();if(sessionStorage.getItem('appUnlocked')==='1')$('login').style.display='none';$('jdate').value=new Date().toISOString().slice(0,10);$('jdate').onchange=setJV;$('iy').value=currentYear();addLine();addLine();setJV();refresh();$('dy').onchange=renderDashboardCharts;$('iy').onchange=renderIS;$('im').onchange=renderIS;if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js');
+initBackupPanel();initAuth();if(sessionStorage.getItem('appUnlocked')==='1')$('login').style.display='none';$('jdate').value=new Date().toISOString().slice(0,10);$('jdate').onchange=setJV;$('iy').value=currentYear();addLine();addLine();setJV();refresh();$('dy').onchange=renderDashboardCharts;$('histType').onchange=renderDashboardCharts;$('iy').onchange=renderIS;$('im').onchange=renderIS;renderDashboardCharts();if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js');
 </script></body></html>
