@@ -1,0 +1,635 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0f172a"><link rel="manifest" href="manifest.json"><title>The Farmer by Layesh Collection</title><style>
+*{box-sizing:border-box}body{margin:0;background:#f1f5f9;color:#0f172a;font-family:Arial,sans-serif}header{position:sticky;top:0;z-index:5;background:#0f172a;color:#fff;padding:16px}h1{font-size:20px;margin:0}.sub{font-size:11px;opacity:.7;margin-top:4px}main{max-width:900px;margin:auto;padding:12px 12px 90px}.page{display:none}.page.active{display:block}.card{background:#fff;border-radius:15px;padding:14px;margin-bottom:12px;box-shadow:0 2px 8px #00000012}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.grid3{grid-template-columns:1fr 1fr 1fr}label{display:block;font-size:12px;font-weight:bold;color:#475569;margin:7px 0 5px}input,select,textarea{width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:10px;font:inherit;background:#fff}textarea{min-height:65px}.rowhead{display:flex;justify-content:space-between;align-items:center;gap:8px}.btn{border:0;border-radius:10px;padding:11px 13px;font-weight:bold}.primary{background:#0f172a;color:#fff}.secondary{background:#e2e8f0;color:#0f172a}.danger{background:#fee2e2;color:#991b1b}.line{border:1px solid #e2e8f0;border-radius:12px;padding:10px;margin-top:10px}.totals{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}.total{background:#f8fafc;padding:10px;border-radius:10px}.status{text-align:center;padding:10px;border-radius:10px;margin-top:10px;font-weight:bold}.ok{background:#dcfce7;color:#166534}.bad{background:#fee2e2;color:#991b1b}.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.metricgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.metric{background:#f8fafc;border-radius:12px;padding:12px}.metric b{display:block;font-size:20px;margin-top:3px}.tablewrap{overflow:auto}table{width:100%;border-collapse:collapse;font-size:12px}th,td{padding:8px;border-bottom:1px solid #e2e8f0;text-align:left;white-space:nowrap}th{background:#f8fafc}.muted{color:#64748b;font-size:12px}.badge{font-size:10px;background:#e2e8f0;padding:4px 7px;border-radius:99px}.item{padding:10px 0;border-bottom:1px solid #e2e8f0}nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e2e8f0;display:flex;overflow:auto;z-index:10;padding:6px;gap:4px}nav button{flex:0 0 auto;border:0;background:#fff;padding:9px 8px;border-radius:9px;font-weight:bold;font-size:11px;color:#475569}nav button.active{background:#e2e8f0;color:#0f172a}@media(max-width:560px){.grid,.grid3{grid-template-columns:1fr}.metricgrid{grid-template-columns:1fr 1fr}}
+#login{position:fixed;inset:0;background:#0f172a;z-index:100;display:flex;align-items:center;justify-content:center;padding:20px}.loginbox{width:min(420px,100%);background:#fff;border-radius:18px;padding:22px;box-shadow:0 20px 60px #0006}.loginbox h2{margin-top:0}.hint{font-size:11px;color:#64748b;margin-top:8px}.searchbox{display:grid;grid-template-columns:1fr 1.4fr;gap:8px}.account-picker{margin-top:7px}@media(max-width:560px){.searchbox{grid-template-columns:1fr}}
+
+.chartgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.chartbox{background:#f8fafc;border-radius:14px;padding:12px;min-height:260px}.chartbox h3{font-size:14px;margin:0 0 8px}.piewrap{display:flex;gap:10px;align-items:center}.pie{width:150px;height:150px;border-radius:50%;flex:0 0 auto}.legend{font-size:11px;line-height:1.55;max-height:170px;overflow:auto}.legend span{display:block}.legend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px}.bars{height:190px;display:flex;align-items:flex-end;gap:7px;overflow-x:auto;padding:8px 3px}.barcol{min-width:42px;text-align:center;font-size:9px}.bar{background:#2563EB;border-radius:5px 5px 0 0;min-height:2px}.barval{font-size:9px;margin-bottom:2px}.smallmetric{background:#f8fafc;border-radius:12px;padding:10px}.smallmetric b{display:block;font-size:17px;margin-top:3px}.sectiontitle{font-weight:700;margin:12px 0 6px}.subrow{background:#fbfdff}.grouprow{background:#e2e8f0;font-weight:700}.lkr{font-weight:700}.fc{font-size:11px;color:#475569}.period{font-size:11px;color:#64748b}.dashboardcontrols{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}.bs-validation{margin-left:auto;text-align:right;font-size:12px;line-height:1.2}.bs-validation .value{font-size:16px;font-weight:700}.bs-validation.bad .value{color:#dc2626;font-weight:800}.jv-review-results{margin-top:10px}.jv-review-results table{min-width:900px}@media(max-width:700px){.chartgrid{grid-template-columns:1fr}.bs-validation{font-size:11px}.bs-validation .value{font-size:14px}}
+.jv-totals{grid-template-columns:repeat(3,minmax(0,1fr))}.ledger-balance-summary{margin-left:auto;text-align:right;font-size:12px;line-height:1.5;font-weight:600;white-space:nowrap}.ledger-balance-summary b{font-size:15px}.is-net-revenue{margin-left:auto;text-align:right;font-size:17px;font-weight:700;white-space:nowrap}.ledger-balance-summary div{display:block}@media(max-width:560px){.jv-totals{grid-template-columns:1fr 1fr}.ledger-balance-summary b{font-size:13px}.is-net-revenue{font-size:15px}}.ledger-filters{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:10px 0 14px}.income-metric{background:#548235!important;color:#fff}.expense-metric{background:#ED7D31!important;color:#fff}.subcode-filters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:10px 0 14px}.subcode-net{font-size:12px;text-align:right;font-weight:700;background:#f8fafc;border-radius:10px;padding:9px 12px;white-space:nowrap}.subcode-net b{display:block;font-size:17px;margin-top:3px}.subsheet-filters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:10px 0 14px}.subsheet-net{font-size:12px;text-align:right;font-weight:700;background:#f8fafc;border-radius:10px;padding:9px 12px;white-space:nowrap}.subsheet-net b{display:block;font-size:17px;margin-top:3px}@media(max-width:560px){.subsheet-filters{grid-template-columns:repeat(3,minmax(140px,1fr));overflow-x:auto;padding-bottom:6px}}@media(max-width:560px){.ledger-filters{grid-template-columns:repeat(4,minmax(150px,1fr));overflow-x:auto;padding-bottom:6px}.subcode-filters{grid-template-columns:repeat(3,minmax(140px,1fr));overflow-x:auto;padding-bottom:6px}}
+.project-tracking-controls{width:min(280px,100%)}
+@media print{
+  @page{size:A4 landscape;margin:12mm}
+  body{background:#fff!important;color:#111!important;font-size:11px}
+  header,nav,#login,.print-project-btn{display:none!important}
+  body:has(#projecttracking.active) main{max-width:none!important;margin:0!important;padding:0!important}
+  body:has(#projecttracking.active) main>.page:not(#projecttracking){display:none!important}
+  #projecttracking{display:block!important}
+  #projecttracking .card{box-shadow:none!important;border:1px solid #ddd;border-radius:0;margin:0 0 12px;padding:12px;break-inside:avoid}
+  #projecttracking h2,#projecttracking h3{color:#111!important}
+  #projecttracking .project-tracking-controls{width:240px}
+  #projecttracking select{display:none!important}
+  #projecttracking .project-tracking-controls:after{content:attr(data-project);display:block;font-weight:bold;padding:8px 0}
+  #projecttracking .metric{border:1px solid #ddd;background:#fff!important;color:#111!important;break-inside:avoid}
+  #projecttracking .tablewrap{overflow:visible!important}
+  #projecttracking table{width:100%!important;font-size:10px;border-collapse:collapse}
+  #projecttracking th,#projecttracking td{white-space:normal!important;border:1px solid #ccc;padding:6px;color:#111!important;background:#fff!important}
+  #projecttracking th{font-weight:bold}
+  .print-report-btn{display:none!important}
+  body:has(#ledger.active) main{max-width:none!important;margin:0!important;padding:0!important}
+  body:has(#ledger.active) main>.page:not(#ledger){display:none!important}
+  body:has(#tb.active) main{max-width:none!important;margin:0!important;padding:0!important}
+  body:has(#tb.active) main>.page:not(#tb){display:none!important}
+  body:has(#is.active) main{max-width:none!important;margin:0!important;padding:0!important}
+  body:has(#is.active) main>.page:not(#is){display:none!important}
+  body:has(#bs.active) main{max-width:none!important;margin:0!important;padding:0!important}
+  body:has(#bs.active) main>.page:not(#bs){display:none!important}
+  #ledger.active .card,#tb.active .card,#is.active .card,#bs.active .card{box-shadow:none!important;border:0;border-radius:0;margin:0;padding:8px;break-inside:avoid}
+  #ledger.active .tablewrap,#tb.active .tablewrap,#is.active .tablewrap,#bs.active .tablewrap{overflow:visible!important}
+  #ledger.active table,#tb.active table,#is.active table,#bs.active table{width:100%!important;font-size:10px;border-collapse:collapse}
+  #ledger.active th,#ledger.active td,#tb.active th,#tb.active td,#is.active th,#is.active td,#bs.active th,#bs.active td{white-space:normal!important;border:1px solid #ccc;padding:6px;color:#111!important;background:#fff!important}
+  #ledger.active .ledger-filters select,#is.active select{display:none!important}
+  #ledger.active .ledger-filters label,#is.active .grid label{display:inline!important;color:#111!important}
+  #ledger.active .ledger-filters,#is.active .grid{display:block!important;margin:8px 0}
+  #ledger.active .ledger-filters>div,#is.active .grid>div{display:inline-block!important;margin-right:16px}
+  #ledger.active .ledger-filters>div:after{font-weight:bold}
+}
+</style></head><body>
+<div id="login"><div class="loginbox"><h2>🔐 The Farmer by Layesh Collection</h2<div id="loginMode"></div><label>Password</label><input id="loginPass" type="password" autocomplete="current-password"><label id="loginPass2Label" style="display:none">Confirm Password</label><input id="loginPass2" type="password" style="display:none" autocomplete="new-password"><button class="btn primary" style="width:100%;margin-top:14px" onclick="authSubmit()" id="authBtn">Login</button><div class="hint">This is an app-level password stored on this device. It is not a replacement for server-side authentication.</div></div></div>
+<header><div class="rowhead"><div><h1>🌱 The Farmer by Layesh Collection</h1><div class="sub">Journal • Ledger • Trial Balance • Income Statement • Balance Sheet • Budget</div></div><button class="btn secondary" onclick="logout()">🔒 Lock</button></div></header><main>
+<section id="home" class="page active"><div class="card"><div class="rowhead"><h2>Dashboard</h2><span class="period" id="dashPeriod">YTD</span></div><div class="metricgrid dashboard-balances" style="grid-template-columns:repeat(2,minmax(0,1fr));margin:12px 0"><div class="metric"><span>Total Assets</span><b id="dashTotalAssets">0.00</b></div><div class="metric"><span>Total Liabilities &amp; Equity</span><b id="dashTotalLiabEquity">0.00</b></div></div><div class="metricgrid dashboard-income-summary" style="grid-template-columns:repeat(3,minmax(0,1fr));margin:12px 0"><div class="metric income-metric"><span>Total Income</span><b id="dashTotalIncome">0.00</b></div><div class="metric expense-metric"><span>Total Expenses</span><b id="dashTotalExpenses">0.00</b></div><div class="metric"><span>Profit / Loss</span><b id="dashProfitLoss">0.00</b></div></div><div class="dashboardcontrols"><div><label>Project</label><select id="dy" onchange="renderDashboardCharts()"></select></div></div><div class="metricgrid dashboard-project-summary" style="grid-template-columns:repeat(3,minmax(0,1fr));margin:12px 0"><div class="metric income-metric"><span>Selected Project Income</span><b id="dashProjectIncome">0.00</b></div><div class="metric expense-metric"><span>Selected Project Expenses</span><b id="dashProjectExpenses">0.00</b></div><div class="metric"><span>Project Profit / Loss</span><b id="dashProjectPL">0.00</b></div></div></div><div class="card"><div class="actions"><button class="btn primary" onclick="show('journal')">＋ New Journal</button><button class="btn secondary" onclick="show('ledger')">📖 Ledger</button></div></div>
+<div class="chartgrid"><div class="chartbox"><h3>YTD / Selected Month Income and Expenses</h3><div class="piewrap"><div id="incomePie" class="pie"></div><div id="incomeLegend" class="legend"></div></div></div><div class="chartbox"><h3>YTD / Selected Month Expenses based on Accounts Type</h3><div class="piewrap"><div id="expensePie" class="pie"></div><div id="expenseLegend" class="legend"></div></div></div><div class="chartbox"><h3>How I used my total income for Expenses, Investment and Saving.</h3><div class="piewrap"><div id="typeIncPie" class="pie"></div><div id="typeIncLegend" class="legend"></div></div></div><div class="chartbox"><h3>YTD / Selected Month Expenses</h3><div class="piewrap"><div id="typeExpPie" class="pie"></div><div id="typeExpLegend" class="legend"></div></div></div><div class="chartbox" style="grid-column:1/-1"><div class="rowhead"><h3>Individual Accounts</h3><div style="width:220px"><select id="histType" onchange="renderDashboardCharts()"></select></div></div><div id="histBars" class="bars"></div></div></div></section>
+<section id="journal" class="page"><div class="card"><div class="rowhead"><h2>New Journal</h2><span class="badge" id="jvBadge"></span></div><div class="grid"><div><label>JV Number</label><input id="jv" readonly></div><div><label>Date</label><input id="jdate" type="date"></div></div><label>Description</label><textarea id="desc"></textarea><label>Reference</label><input id="ref"></div><div class="card"><div class="rowhead"><h2>Journal Lines</h2><button class="btn secondary" onclick="addLine()">＋ Add Line</button></div><div id="lines"></div><datalist id="projectOptions"></datalist><div class="totals jv-totals"><div class="total">Total Debit (LKR)<br><b id="td">0.00</b></div><div class="total">Total Credit (LKR)<br><b id="tc">0.00</b></div><div class="total">Difference (LKR)<br><b id="tDiff">0.00</b></div></div><div id="st" class="status bad">Debit and credit must balance</div><div class="actions"><button class="btn secondary" onclick="clearJournal()">Clear</button><button class="btn primary" onclick="postJournal()">💾 Post Journal</button></div></div></section>
+<section id="history" class="page">
+<div class="card"><div class="rowhead"><h2>Posted JV Review</h2><button class="btn secondary" onclick="clearJVReview()">Clear</button></div>
+<label>JV Number</label><input id="jvReviewSearch" placeholder="Enter JV number, e.g. 26090001" oninput="renderJVReview()">
+<div id="jvReviewResults" class="jv-review-results"></div></div>
+<div class="card"><div class="rowhead"><h2>Journal History</h2><button class="btn secondary" onclick="exportCSV()">Export CSV</button></div><div id="hist"></div></div>
+</section>
+<section id="ledger" class="page"><div class="card"><div class="rowhead"><h2>Ledger</h2><button type="button" class="btn primary print-report-btn" onclick="printReport('ledger')">🖨 Print / Save PDF</button><div id="ledgerBalanceSummary" class="ledger-balance-summary"><div>LKR Balance – <b>0.00</b></div></div></div><div class="ledger-filters"><div><label>Year</label><select id="lyear" onchange="renderLedger()"><option value="">All Years</option></select></div><div><label>Month</label><select id="lmonth" onchange="renderLedger()"><option value="">All Months</option><option value="1">January</option><option value="2">February</option><option value="3">March</option><option value="4">April</option><option value="5">May</option><option value="6">June</option><option value="7">July</option><option value="8">August</option><option value="9">September</option><option value="10">October</option><option value="11">November</option><option value="12">December</option></select></div><div><label>Account Type</label><select id="ltype" onchange="filterLedgerAccounts()"><option value="">All Account Types</option></select></div><div><label>Individual Account</label><select id="lacct" onchange="renderLedger()"></select></div></div><div class="tablewrap"><table><thead><tr><th>Date</th><th>JV</th><th>Project Name</th><th>Description</th><th>Debit LKR</th><th>Credit LKR</th><th>Balance LKR</th></tr></thead><tbody id="ledgerBody"></tbody></table></div></div></section>
+<section id="tb" class="page"><div class="card"><div class="rowhead"><h2>Trial Balance by Account Type</h2><button type="button" class="btn primary print-report-btn" onclick="printReport('tb')">🖨 Print / Save PDF</button></div><div class="tablewrap"><table><thead><tr><th>Account Type / Account</th><th>Debit LKR</th><th>Credit LKR</th><th>Balance LKR</th></tr></thead><tbody id="tbBody"></tbody></table></div></div></section>
+<section id="is" class="page"><div class="card"><div class="rowhead"><h2>Income Statement by Account Type</h2><button type="button" class="btn primary print-report-btn" onclick="printReport('is')">🖨 Print / Save PDF</button><div id="isNetRevenue" class="is-net-revenue">0.00</div></div><div class="grid"><div><label>Year</label><select id="iy"></select></div><div><label>Project</label><select id="im" onchange="renderIS()"><option value="">All Projects</option></select></div></div><div class="tablewrap"><table><thead><tr><th>Account Type / Account</th><th>Debit LKR</th><th>Credit LKR</th><th>Net LKR</th></tr></thead><tbody id="isBody"></tbody></table></div></div></section>
+<section id="bs" class="page"><div class="card"><div class="rowhead"><h2>Balance Sheet by Account Type</h2><button type="button" class="btn primary print-report-btn" onclick="printReport('bs')">🖨 Print / Save PDF</button><div id="bsValidation" class="bs-validation"><span>Balance Check</span><div class="value" id="bsValidationValue">0</div></div></div><div class="tablewrap"><table><thead><tr><th>Account Type / Account</th><th>Debit LKR</th><th>Credit LKR</th><th>Balance LKR</th></tr></thead><tbody id="bsBody"></tbody></table></div></div></section>
+<section id="budget" class="page"><div class="card"><h2>Budget Plan</h2><div class="grid"><div><label>Month</label><input id="bm" type="month"></div><div><label>Account</label><select id="ba"></select></div></div><label>Budget Amount (LKR)</label><input id="bamt" type="number" step="0.01"><label>Remark</label><textarea id="bremark" placeholder="Enter budget remark"></textarea><button class="btn primary" style="width:100%;margin-top:10px" onclick="saveBudget()">Save Budget</button></div><div class="card"><div class="tablewrap"><table><thead><tr><th>Month</th><th>Account</th><th>Budget LKR</th></tr></thead><tbody id="budgetBody"></tbody></table></div></div></section>
+<section id="coa" class="page"><div class="card"><h2>Chart of Accounts</h2><div class="grid"><div><label>Individual Account</label><input id="an"></div><div><label>Account Type</label><input id="at" list="coaAccountTypeOptions" placeholder="Select or type..."></div><div><label>Sub Account</label><input id="as" list="coaSubAccountOptions" placeholder="Select or type..."></div><div><label>Type</label><input id="anature" list="coaNatureOptions" placeholder="Select or type..."></div></div><datalist id="coaAccountTypeOptions"></datalist><datalist id="coaSubAccountOptions"></datalist><datalist id="coaNatureOptions"></datalist><button class="btn primary" style="width:100%;margin-top:10px" onclick="addAccount()">Add Account</button></div><div class="card"><div class="tablewrap"><table><thead><tr><th>Account Name</th><th>ACCOUNT TYPE</th><th>SUB ACCOUNT</th><th>TYPE</th><th>Action</th></tr></thead><tbody id="coaBody"></tbody></table></div></div></section><section id="subcodesheets" class="page">
+<div class="card"><h2>Project Details</h2>
+<div class="grid">
+<div><label>Project Name</label><input id="projectName" placeholder="e.g. PROJECT05"></div>
+<div><label>Area</label><input id="projectArea" placeholder="Project location"></div>
+<div><label>Status of Land</label><input id="projectStatus" placeholder="e.g. Rental"></div>
+<div><label>Items of Cultivating</label><input id="projectItems" placeholder="e.g. Cucumber"></div>
+<div><label>Date of Start</label><input id="projectStart" type="date"></div>
+</div>
+<div class="actions"><button type="button" class="btn primary" onclick="saveProject()">Save Project</button><button type="button" class="btn secondary" onclick="clearProjectForm()">Clear</button></div>
+<p class="muted">Enter project details and select Save Project. Saved projects become available in the JV Project Name dropdown.</p>
+</div>
+<div class="card"><div class="tablewrap"><table><thead><tr><th>Project Name</th><th>Area</th><th>Status of Land</th><th>Items of Cultivating</th><th>Date of Start</th><th>Action</th></tr></thead><tbody id="projectBody"></tbody></table></div></div>
+</section>
+<section id="projecttracking" class="page"><div class="card"><div class="rowhead"><h2>Project Tracking</h2><div class="project-tracking-controls"><label>Project</label><select id="trackingProject" onchange="renderProjectTracking()"></select><button type="button" class="btn primary print-project-btn" onclick="printProjectTracking()" style="margin-top:8px;width:100%">🖨 Print / Save PDF</button></div></div><div id="projectInfo"></div><div class="metricgrid"><div class="metric income-metric"><span>INCOME Total</span><b id="projectIncome">0.00</b></div><div class="metric expense-metric"><span>EXPENSES Total</span><b id="projectExpenses">0.00</b></div><div class="metric"><span>Profit / Loss</span><b id="projectProfit">0.00</b></div></div></div><div class="card"><h3>Financial Summary</h3><div class="tablewrap"><table><thead><tr><th>Project</th><th>Account Type</th><th>Sub Account</th><th>Account Name</th><th>Total (LKR)</th></tr></thead><tbody id="projectSummaryBody"></tbody></table></div></div></section>
+
+<section id="backup" class="page">
+  <div class="card">
+    <h2>Google Drive Backup &amp; Restore</h2>
+    <p class="muted">Your accounting data continues to save on this device. When Google Drive is connected, the app also uploads an encrypted full backup after each saved accounting change.</p>
+    <div class="status" id="driveStatus">Local saving is active. Google Drive is not connected.</div>
+    <label>Google OAuth Web Client ID</label>
+    <input id="driveClientId" placeholder="Paste your Google OAuth Web Client ID">
+    <div class="hint">Create a Web application OAuth client in Google Cloud, enable the Google Drive API, and add the exact app origin to Authorized JavaScript origins. Do not enter a client secret here.</div>
+    <label>Backup encryption password</label>
+    <input id="backupPass" type="password" autocomplete="new-password" placeholder="Use a strong, unique password (12+ characters)">
+    <div class="hint">This password encrypts the backup before upload. It is not saved by the app. Keep it separately; without it, the backup cannot be decrypted.</div>
+    <div class="actions">
+      <button class="btn primary" onclick="connectGoogleDrive()">Connect Google Drive</button>
+      <button class="btn secondary" onclick="disconnectGoogleDrive()">Disconnect</button>
+      <button class="btn secondary" onclick="backupToDriveNow()">Backup Now</button>
+      <button class="btn secondary" onclick="restoreFromDrive()">Restore from Drive</button>
+    </div>
+    <div class="muted" id="driveLastBackup" style="margin-top:10px">Last successful Drive backup: Not yet backed up</div>
+  </div>
+  <div class="card">
+    <h3>Backup coverage</h3>
+    <p class="muted">The full backup includes Chart of Accounts, journal vouchers and all JV lines, currencies and exchange rates, budgets, and the app's backup metadata. Restore replaces the current local accounting dataset after confirmation.</p>
+    <p class="muted"><b>Automatic backup limitation:</b> Google access tokens expire. After the token expires or the app is reopened, reconnect to Google Drive to resume after-entry backups. This browser-only version cannot silently refresh Google access in the background. Keep a separate backup copy as an additional safeguard.</p>
+    <p class="muted">Use the app over HTTPS or localhost for Google sign-in. Opening the HTML directly as a file may not be accepted as an authorized Google OAuth origin.</p>
+  </div>
+</section>
+</main><nav><button class="active" onclick="show('home',this)">🏠 Home</button><button onclick="show('projecttracking',this)">🌱 Project Tracking</button><button onclick="show('journal',this)">＋ JV</button><button onclick="show('history',this)">📋 History</button><button onclick="show('ledger',this)">📖 Ledger</button><button onclick="show('tb',this)">TB</button><button onclick="show('is',this)">P&L</button><button onclick="show('bs',this)">BS</button><button onclick="show('budget',this)">Budget</button><button onclick="show('coa',this)">COA</button><button onclick="show('currency',this)">FX</button><button onclick="show('subcodesheets',this)">Project Details</button><button onclick="show('backup',this)">☁ Backup</button></nav>
+<script>
+window.REQUESTED_CHART_PALETTE=["#4F81BD","#C0504D","#9BBB59","#8064A2","#4BACC6","#F79646","#2F75B5","#70AD47","#7030A0","#FFC000"];
+window.requestedChartColors=function(n){return Array.from({length:n},(_,i)=>window.REQUESTED_CHART_PALETTE[i%window.REQUESTED_CHART_PALETTE.length]);};
+</script><script>
+const BASE=[];let accounts=JSON.parse(localStorage.getItem('accounts')||'null')||BASE;if(!Array.isArray(accounts))accounts=BASE;let currencies=JSON.parse(localStorage.getItem('currencies')||'null')||[{code:'LKR',rate:1},{code:'USD',rate:1},{code:'MVR',rate:1}];let journals=JSON.parse(localStorage.getItem('journals')||'[]');let budgets=JSON.parse(localStorage.getItem('budgets')||'[]');
+let projects=JSON.parse(localStorage.getItem('projects')||'[]');
+if(!Array.isArray(projects))projects=[];
+let nline=0;
+const $=id=>document.getElementById(id), esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+let authMode='login';
+async function digestPassword(password,salt){let data=new TextEncoder().encode(password),saltBytes=new TextEncoder().encode(salt);let key=await crypto.subtle.importKey('raw',data,{name:'PBKDF2'},false,['deriveBits']);let bits=await crypto.subtle.deriveBits({name:'PBKDF2',salt:saltBytes,iterations:120000,hash:'SHA-256'},key,256);return [...new Uint8Array(bits)].map(b=>b.toString(16).padStart(2,'0')).join('')}
+
+// Google Drive encrypted backup module. Access tokens and backup passwords stay in memory only.
+let driveToken = null, driveTokenExpiresAt = 0, driveTokenClient = null, driveConnectPurpose = 'normal';
+let driveBackupPassword = '', driveFileId = '', driveBackupBusy = false, driveBackupQueued = false;
+let driveScriptPromise = null;
+
+function driveStatus(message, good=false){
+  const el=$('driveStatus');
+  if(el){el.textContent=message;el.className='status '+(good?'ok':'bad');}
+}
+function loadGoogleIdentity(){
+  if(window.google?.accounts?.oauth2)return Promise.resolve();
+  if(driveScriptPromise)return driveScriptPromise;
+  driveScriptPromise=new Promise((resolve,reject)=>{
+    const s=document.createElement('script');
+    s.src='https://accounts.google.com/gsi/client';
+    s.onload=()=>window.google?.accounts?.oauth2?resolve():reject(new Error('Google sign-in library did not load.'));
+    s.onerror=()=>reject(new Error('Could not load Google sign-in. Check your internet connection.'));
+    document.head.appendChild(s);
+  });
+  return driveScriptPromise;
+}
+function backupPayload(){
+  return {
+    format:'MobileAccountingFullBackup',
+    schemaVersion:1,
+    exportedAt:new Date().toISOString(),
+    accounts,currencies,journals,budgets
+  };
+}
+async function deriveBackupKey(password,salt){
+  const material=await crypto.subtle.importKey('raw',new TextEncoder().encode(password),'PBKDF2',false,['deriveKey']);
+  return crypto.subtle.deriveKey(
+    {name:'PBKDF2',salt,iterations:310000,hash:'SHA-256'},
+    material,{name:'AES-GCM',length:256},false,['encrypt','decrypt']
+  );
+}
+function bytesToBase64(bytes){
+  let binary='';const chunk=0x8000;
+  for(let i=0;i<bytes.length;i+=chunk)binary+=String.fromCharCode(...bytes.subarray(i,i+chunk));
+  return btoa(binary);
+}
+function base64ToBytes(value){
+  const binary=atob(value),bytes=new Uint8Array(binary.length);
+  for(let i=0;i<binary.length;i++)bytes[i]=binary.charCodeAt(i);
+  return bytes;
+}
+async function encryptBackup(password){
+  const salt=crypto.getRandomValues(new Uint8Array(16));
+  const iv=crypto.getRandomValues(new Uint8Array(12));
+  const key=await deriveBackupKey(password,salt);
+  const plain=new TextEncoder().encode(JSON.stringify(backupPayload()));
+  const cipher=new Uint8Array(await crypto.subtle.encrypt({name:'AES-GCM',iv},key,plain));
+  const envelope={format:'MA-ENCRYPTED-BACKUP',version:1,kdf:'PBKDF2-SHA256',iterations:310000,cipher:'AES-256-GCM',salt:bytesToBase64(salt),iv:bytesToBase64(iv),data:bytesToBase64(cipher)};
+  return new Blob([JSON.stringify(envelope)],{type:'application/octet-stream'});
+}
+async function decryptBackup(blob,password){
+  const env=JSON.parse(await blob.text());
+  if(env.format!=='MA-ENCRYPTED-BACKUP'||env.version!==1||env.kdf!=='PBKDF2-SHA256'||env.cipher!=='AES-256-GCM')throw new Error('This is not a supported Mobile Accounting encrypted backup.');
+  const key=await deriveBackupKey(password,base64ToBytes(env.salt));
+  const plain=await crypto.subtle.decrypt({name:'AES-GCM',iv:base64ToBytes(env.iv)},key,base64ToBytes(env.data));
+  const data=JSON.parse(new TextDecoder().decode(plain));
+  if(data.format!=='MobileAccountingFullBackup'||data.schemaVersion!==1||!Array.isArray(data.accounts)||!Array.isArray(data.journals)||!Array.isArray(data.currencies)||!Array.isArray(data.budgets))throw new Error('Backup content validation failed.');
+  return data;
+}
+function getDriveConfig(){
+  const id=$('driveClientId').value.trim();
+  const pass=$('backupPass').value;
+  if(!id||!id.endsWith('.apps.googleusercontent.com'))throw new Error('Enter a valid Google OAuth Web Client ID.');
+  if(pass.length<12)throw new Error('Use a backup encryption password of at least 12 characters.');
+  localStorage.setItem('driveOAuthClientId',id);
+  driveBackupPassword=pass;
+  return {id,pass};
+}
+async function connectGoogleDrive(purpose='normal'){
+  try{
+    driveConnectPurpose=purpose;
+    const cfg=getDriveConfig();
+    await loadGoogleIdentity();
+    driveTokenClient=google.accounts.oauth2.initTokenClient({
+      client_id:cfg.id,
+      scope:'https://www.googleapis.com/auth/drive.file',
+      callback:async response=>{
+        if(response.error||!response.access_token){driveStatus('Google Drive connection was not completed: '+(response.error_description||response.error||'No access token'));return;}
+        driveToken=response.access_token;
+        driveTokenExpiresAt=Date.now()+(Number(response.expires_in||3600)*1000)-60000;
+        if(driveConnectPurpose==='restore'){
+          driveStatus('Google Drive connected. Select Restore from Drive to load the saved backup.',true);
+          return;
+        }
+        try{
+          const found=await findDriveBackup();
+          if(found){driveFileId=found.id;driveStatus('Google Drive connected. An existing backup was found. Choose Restore from Drive to recover it, or Backup Now to replace it with this device’s data.',true);}
+          else{driveStatus('Google Drive connected. Creating the first encrypted full backup…',true);await runDriveBackup();}
+        }catch(e){driveStatus('Connected, but could not check or create the backup: '+e.message);}
+      }
+    });
+    driveTokenClient.requestAccessToken({prompt:'consent'});
+  }catch(e){driveStatus(e.message);}
+}
+function disconnectGoogleDrive(){
+  driveToken=null;driveTokenExpiresAt=0;driveTokenClient=null;driveBackupPassword='';
+  driveStatus('Disconnected. Local saving remains active.');
+}
+async function driveFetch(url,options={}){
+  if(!driveToken||Date.now()>=driveTokenExpiresAt)throw new Error('Google access expired. Reconnect Google Drive to resume backups.');
+  const headers=new Headers(options.headers||{});
+  headers.set('Authorization','Bearer '+driveToken);
+  const response=await fetch(url,{...options,headers});
+  if(!response.ok){let detail='';try{detail=(await response.json()).error?.message||'';}catch(_){}throw new Error('Google Drive returned '+response.status+(detail?': '+detail:''));}
+  return response;
+}
+async function findDriveBackup(){
+  const q=encodeURIComponent("name='MobileAccounting_FullBackup.enc' and trashed=false");
+  const response=await driveFetch('https://www.googleapis.com/drive/v3/files?q='+q+'&spaces=drive&orderBy=modifiedTime desc&pageSize=10&fields=files(id,name,modifiedTime)');
+  const result=await response.json();
+  return result.files?.[0]||null;
+}
+async function uploadDriveBlob(blob){
+  const existing=await findDriveBackup();
+  const metadata={name:'MobileAccounting_FullBackup.enc',mimeType:'application/octet-stream',description:'Encrypted full backup from Mobile Accounting'};
+  const boundary='ma_backup_'+crypto.randomUUID().replaceAll('-','');
+  const body=new Blob([
+    '--'+boundary+'\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n',
+    JSON.stringify(metadata),'\r\n--'+boundary+'\r\nContent-Type: application/octet-stream\r\n\r\n',
+    blob,'\r\n--'+boundary+'--'
+  ]);
+  const url=existing
+    ?'https://www.googleapis.com/upload/drive/v3/files/'+encodeURIComponent(existing.id)+'?uploadType=multipart'
+    :'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart';
+  const response=await driveFetch(url,{
+    method:existing?'PATCH':'POST',
+    headers:{'Content-Type':'multipart/related; boundary='+boundary},
+    body
+  });
+  const result=await response.json();
+  driveFileId=result.id||existing?.id||'';
+  return result;
+}
+async function runDriveBackup(){
+  if(driveBackupBusy){driveBackupQueued=true;return;}
+  if(!driveToken||Date.now()>=driveTokenExpiresAt){driveStatus('Local data saved. Reconnect Google Drive to upload the latest encrypted backup.');return;}
+  if(!driveBackupPassword){driveStatus('Local data saved. Enter the backup password and reconnect to Google Drive.');return;}
+  driveBackupBusy=true;
+  try{
+    const blob=await encryptBackup(driveBackupPassword);
+    await uploadDriveBlob(blob);
+    const stamp=new Date().toLocaleString();
+    localStorage.setItem('driveLastBackupAt',stamp);
+    const last=$('driveLastBackup');if(last)last.textContent='Last successful Drive backup: '+stamp;
+    driveStatus('Encrypted backup successfully saved to Google Drive. After-entry backup is active while connected.',true);
+  }finally{
+    driveBackupBusy=false;
+    if(driveBackupQueued){driveBackupQueued=false;runDriveBackup().catch(e=>driveStatus('Backup failed: '+e.message));}
+  }
+}
+let driveBackupTimer=null;
+function queueDriveBackup(){
+  if(!driveToken||!driveBackupPassword)return;
+  clearTimeout(driveBackupTimer);
+  driveBackupTimer=setTimeout(()=>runDriveBackup().catch(e=>driveStatus('Local data saved, but Drive backup failed: '+e.message)),1200);
+}
+async function backupToDriveNow(){
+  try{
+    if(!driveToken||Date.now()>=driveTokenExpiresAt){await connectGoogleDrive('normal');return;}
+    if(!$('backupPass').value||$('backupPass').value.length<12)throw new Error('Enter your backup encryption password (12+ characters).');
+    driveBackupPassword=$('backupPass').value;
+    driveStatus('Uploading encrypted full backup…');
+    await runDriveBackup();
+  }catch(e){driveStatus(e.message);}
+}
+async function restoreFromDrive(){
+  try{
+    const cfg=getDriveConfig();
+    if(!driveToken||Date.now()>=driveTokenExpiresAt){await connectGoogleDrive('restore');alert('Connect Google Drive, then select Restore from Drive again. Your existing Drive backup will not be overwritten during connection.');return;}
+    driveStatus('Searching for your encrypted backup…');
+    const file=await findDriveBackup();
+    if(!file)throw new Error('No Mobile Accounting backup was found in the connected Google Drive account.');
+    if(!confirm('Restore the latest Google Drive backup? This will replace the accounting data currently saved on this device.'))return;
+    const response=await driveFetch('https://www.googleapis.com/drive/v3/files/'+encodeURIComponent(file.id)+'?alt=media');
+    const data=await decryptBackup(await response.blob(),cfg.pass);
+    accounts=data.accounts;currencies=data.currencies;journals=data.journals;budgets=data.budgets;
+    persist();
+    driveStatus('Restore completed. Your accounting data has been loaded on this device.',true);
+    alert('Restore completed. The app will reload your accounting records.');
+    location.reload();
+  }catch(e){driveStatus('Restore failed: '+e.message);}
+}
+function initBackupPanel(){
+  const id=localStorage.getItem('driveOAuthClientId')||'';
+  if($('driveClientId'))$('driveClientId').value=id;
+  const last=localStorage.getItem('driveLastBackupAt');
+  if(last&&$('driveLastBackup'))$('driveLastBackup').textContent='Last successful Drive backup: '+last;
+}
+
+function initAuth(){let h=localStorage.getItem('appPasswordHash'),salt=localStorage.getItem('appPasswordSalt');if(!h||!salt){authMode='setup';$('loginMode').innerHTML='<p>Create a password for this app.</p>';$('loginPass2Label').style.display='block';$('loginPass2').style.display='block';$('authBtn').textContent='Create Password'}else{$('loginMode').innerHTML='<p>Enter your password to unlock.</p>'}}
+async function authSubmit(){let p=$('loginPass').value;if(!p)return alert('Enter a password.');if(authMode==='setup'){let p2=$('loginPass2').value;if(p.length<6)return alert('Use at least 6 characters.');if(p!==p2)return alert('Passwords do not match.');let salt=crypto.randomUUID();localStorage.setItem('appPasswordSalt',salt);localStorage.setItem('appPasswordHash',await digestPassword(p,salt));sessionStorage.setItem('appUnlocked','1');$('login').style.display='none'}else{let salt=localStorage.getItem('appPasswordSalt'),h=await digestPassword(p,salt);if(h!==localStorage.getItem('appPasswordHash'))return alert('Incorrect password.');sessionStorage.setItem('appUnlocked','1');$('login').style.display='none'}}
+function logout(){sessionStorage.removeItem('appUnlocked');$('loginPass').value='';$('loginPass2').value='';$('login').style.display='flex';initAuth()}
+function typeOpts(){let t=[...new Set(accounts.map(a=>a.accountType).filter(Boolean))].sort();return '<option value="">All Types</option>'+t.map(x=>'<option>'+esc(x)+'</option>').join('')}
+function filteredOpts(type,search){let q=(search||'').toLowerCase(),t=type||'';return '<option value="">Select account</option>'+accounts.filter(a=>(!t||a.accountType===t)&&(!q||a.name.toLowerCase().includes(q))).map(a=>'<option>'+esc(a.name)+'</option>').join('')}
+function filterLineAccounts(el){let line=el.closest('.line'),type=line.querySelector('.acctType').value,search=line.querySelector('.acctSearch').value,sel=line.querySelector('.acct'),old=sel.value;sel.innerHTML=filteredOpts(type,search);if([...sel.options].some(o=>o.value===old))sel.value=old}
+async function loadFXFile(){try{let r=await fetch('FX_Rates.csv?'+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error('FX_Rates.csv not found');let text=await r.text();let lines=text.trim().split(/\r?\n/);if(lines.length<2)throw new Error('FX file is empty');let headers=lines[0].split(',').map(x=>x.trim().toLowerCase()),ci=headers.indexOf('currency'),ri=headers.indexOf('ratetolkr'),di=headers.indexOf('date');if(ci<0||ri<0)throw new Error('Required columns: Currency,RateToLKR');let count=0;for(let i=1;i<lines.length;i++){let cols=lines[i].split(',').map(x=>x.trim()),code=(cols[ci]||'').toUpperCase(),rate=+(cols[ri]||0);if(!code||!rate)continue;let x=currencies.find(c=>c.code===code);if(x){x.rate=rate;x.source='FX file';x.rateDate=di>=0?cols[di]:''}else currencies.push({code,rate,source:'FX file',rateDate:di>=0?cols[di]:''});count++}persist();refresh();alert(count+' FX rates loaded from FX_Rates.csv.')}catch(e){alert('FX file could not be loaded. '+e.message)}}
+function currencyRate(code){let x=currencies.find(c=>c.code===code);return x?+x.rate||1:1}
+function setAutoRate(el){let code=el?el.value:$('curr')?.value,x=currencies.find(c=>c.code===code);return x?+x.rate||1:1}
+function persist(){
+  localStorage.setItem('accounts',JSON.stringify(accounts));
+  localStorage.setItem('currencies',JSON.stringify(currencies));
+  localStorage.setItem('journals',JSON.stringify(journals));
+  localStorage.setItem('budgets',JSON.stringify(budgets));
+  localStorage.setItem('projects',JSON.stringify(projects));
+  queueDriveBackup();
+}
+function typeOptionsForLine(){let t=[...new Set(accounts.map(a=>a.accountType).filter(Boolean))].sort();return '<option value="">All Types</option>'+t.map(x=>'<option>'+esc(x)+'</option>').join('')}
+function cOpts(){return currencies.map(c=>'<option>'+esc(c.code)+'</option>').join('')}
+function nextJV(d){let ym=d.slice(2,4)+d.slice(5,7),m=0;journals.forEach(j=>{if(j.jv.startsWith(ym))m=Math.max(m,+j.jv.slice(4)||0)});return ym+String(m+1).padStart(4,'0')}
+function setJV(){$('jv').value=nextJV($('jdate').value);$('jvBadge').textContent=$('jv').value}
+function addLine(){nline++;let x=document.createElement('div');x.className='line';x.id='line'+nline;x.innerHTML=`<div class="rowhead"><b>Line ${nline}</b><button type="button" class="btn danger" onclick="removeLine(${nline})">Remove</button></div><div class="searchbox"><div><label>Account Type</label><select class="acctType" onchange="filterLineAccounts(this)">${typeOptionsForLine()}</select></div><div><label>Search Individual Account</label><input class="acctSearch" placeholder="Type to search..." oninput="filterLineAccounts(this)"></div></div><label>Individual Account</label><select class="acct account-picker">${filteredOpts('','')}</select><label>Project Name</label><select class="subcode project-picker"><option value="">Select project</option>${projectSelectOptions('')}</select><div class="grid currency-grid" style="display:none"><div><label>Currency</label><select class="lineCurr" onchange="updateLineFX(this)"><option value="LKR">LKR</option></select></div><div><label>Exchange Rate to LKR</label><input class="lineRate" type="number" step="0.0001" value="1"></div></div><div class="grid"><div><label>CR / DB</label><select class="side"><option value="DB">DB</option><option value="CR">CR</option></select></div><div><label>Amount</label><input class="amt" type="number" step="0.01" min="0" value="0"></div></div> <div class="fc">Amount: <b class="lkrAmt">0.00</b></div>`;$('lines').appendChild(x);x.querySelector('.lineRate').value=currencyRate(x.querySelector('.lineCurr').value);x.querySelectorAll('input,select').forEach(e=>e.addEventListener('input',calc));x.querySelector('.lineCurr').addEventListener('change',()=>{updateLineFX(x.querySelector('.lineCurr'));calc()});calc()}
+function updateLineFX(sel){let line=sel.closest('.line');line.querySelector('.lineRate').value=currencyRate(sel.value);calc()}
+function removeLine(i){$('line'+i)?.remove();calc()}
+function normalizeLine(j,l){let code=l.currency||j.currency||'LKR',rate=+(l.rate||j.rate||currencyRate(code)||1),side=l.side||((l.debit||0)>0?'DB':'CR'),amount=l.amount!=null?+l.amount:Math.max(+(l.debit||0),+(l.credit||0));let lkr=l.lkr!=null?+l.lkr:amount*rate;return {account:l.account,subcode:l.subcode||'',currency:code,rate,side,amount,lkr,debitLKR:side==='DB'?lkr:0,creditLKR:side==='CR'?lkr:0}}
+function lineRows(){return [...document.querySelectorAll('.line')].map(x=>{let code=x.querySelector('.lineCurr').value,rate=+x.querySelector('.lineRate').value||1,side=x.querySelector('.side').value,amount=+x.querySelector('.amt').value||0,project=x.querySelector('.project-picker')?.value||x.querySelector('.subcode')?.value||'';return {account:x.querySelector('.acct').value,subcode:project,project,currency:code,rate,side,amount,lkr:amount*rate,debitLKR:side==='DB'?amount*rate:0,creditLKR:side==='CR'?amount*rate:0}}).filter(x=>x.account&&x.amount>0)}
+function calc(){let rows=lineRows(),d=rows.reduce((s,x)=>s+x.debitLKR,0),c=rows.reduce((s,x)=>s+x.creditLKR,0),diff=Math.abs(d-c);document.querySelectorAll('.line').forEach((x,i)=>{let a=+x.querySelector('.amt').value||0,r=+x.querySelector('.lineRate').value||1;x.querySelector('.lkrAmt').textContent=''+(a*r).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})});$('td').textContent=''+d.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});$('tc').textContent=''+c.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});$('tDiff').textContent=''+diff.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});$('st').className='status '+(d>0&&Math.abs(d-c)<.005?'ok':'bad');$('st').textContent=d>0&&Math.abs(d-c)<.005?'✓ Balanced':'Debit and credit must balance';return[d,c,rows]}
+function clearJournal(){$('desc').value='';$('ref').value='';$('lines').innerHTML='';nline=0;addLine();addLine();setJV()}
+function postJournal(){let [d,c,ls]=calc();if(!(d>0&&Math.abs(d-c)<.005))return alert('Journal must be balanced in LKR.');if(!ls.length)return alert('Enter account lines.');journals.push({jv:$('jv').value,date:$('jdate').value,description:$('desc').value,reference:$('ref').value,lines:ls});persist();alert('JV '+$('jv').value+' posted');clearJournal();refresh()}
+function show(id,btn){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));$(id).classList.add('active');document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');refresh()}
+function periodMatch(date,year,month){let d=new Date(date);if(d.getFullYear()!=year)return false;return !month||d.getMonth()+1==month}
+function lineForReport(j,l){let x=normalizeLine(j,l);x.project=l.project||l.subcode||'';x.subcode=x.project;return x}
+function incomeExpenseTotals(year,month){let inc=0,exp=0;journals.forEach(j=>{if(!periodMatch(j.date,year,month))return;j.lines.forEach(l=>{let x=lineForReport(j,l),a=accounts.find(a=>a.name===x.account)||{},n=nature(a);if(n.includes('income'))inc+=x.creditLKR-x.debitLKR;else if(n.includes('expense'))exp+=x.debitLKR-x.creditLKR})});return {inc,exp}}
+function currentYear(){return new Date().getFullYear()}
+function years(){let y=new Set([currentYear()]);journals.forEach(j=>y.add(new Date(j.date).getFullYear()));return [...y].sort((a,b)=>b-a)}
+function fillYears(){let optsY=years().map(y=>'<option value="'+y+'">'+y+'</option>').join('');$('dy').innerHTML=optsY;$('iy').innerHTML=optsY;$('dy').value=currentYear();$('iy').value=currentYear()}
+function renderHistory(){$('hist').innerHTML=journals.slice().reverse().map(j=>`<div class="item"><div class="rowhead"><div><b>${esc(j.jv)}</b><div class="muted">${esc(j.date)} · ${esc(j.description||'')} · ${j.lines.length} line(s)</div></div><button class="btn danger" onclick="deleteJV('${esc(String(j.jv))}')">Delete JV</button></div></div>`).join('')||'<p class="muted">No journals yet.</p>'}
+function renderJVReview(){
+  let q=$('jvReviewSearch').value.trim().toLowerCase();
+  if(!q){$('jvReviewResults').innerHTML='<p class="muted">Enter a JV number to review posted journal details.</p>';return}
+  let matches=journals.filter(j=>String(j.jv||'').toLowerCase().includes(q));
+  let rows=[];
+  matches.forEach(j=>j.lines.forEach(l=>{let x=lineForReport(j,l);rows.push([j.jv,j.date,j.description,j.reference,x.account,x.subcode,x.currency,x.side,x.amount,x.lkr])}));
+  let unique=[...new Map(matches.map(j=>[String(j.jv),j])).values()];
+  $('jvReviewResults').innerHTML=matches.length?`
+    <div class="tablewrap"><table><thead><tr><th>JV Number</th><th>Date</th><th>Description</th><th>Reference</th><th>Account</th><th>Project Name</th><th>Currency</th><th>Debit/Credit</th><th>Amount</th><th>LKR Amount</th></tr></thead>
+    <tbody>${rows.map(r=>`<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td><td>${esc(r[2])}</td><td>${esc(r[3])}</td><td>${esc(r[4])}</td><td>${esc(r[5])}</td><td>${esc(r[6])}</td><td>${esc(r[7])}</td><td>${Number(r[8]).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</td><td class="lkr">${Number(r[9]).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</td></tr>`).join('')}</tbody></table></div>
+    <div class="actions">${unique.map(j=>`<button class="btn danger" onclick="deleteJV('${esc(String(j.jv))}')">Delete JV ${esc(String(j.jv))}</button>`).join('')}</div>
+  `:'<p class="muted">No matching posted JV found.</p>';
+}
+
+function deleteJV(jv){
+  let idx=journals.findIndex(j=>String(j.jv)===String(jv));
+  if(idx<0){alert('JV '+jv+' was not found.');return}
+  let j=journals[idx];
+  let ok=confirm('Delete JV '+j.jv+'?\n\nDate: '+(j.date||'')+'\nDescription: '+(j.description||'')+'\nLines: '+j.lines.length+'\n\nThis will permanently remove this posted JV from this device. Please make sure you have a backup first.');
+  if(!ok)return;
+  journals.splice(idx,1);
+  persist();
+  refresh();
+  let search=$('jvReviewSearch');
+  if(search&&search.value)renderJVReview();
+  alert('JV '+j.jv+' has been deleted.');
+}
+
+function clearJVReview(){$('jvReviewSearch').value='';renderJVReview()}
+function filterLedgerAccounts(){
+  let type=$('ltype').value,previous=$('lacct').value;
+  let names=accounts.filter(a=>!type||reportAccountType(a)===type).map(a=>a.name);
+  $('lacct').innerHTML='<option value="">Select account</option>'+names.map(n=>'<option value="'+esc(n)+'">'+esc(n)+'</option>').join('');
+  $('lacct').value=names.includes(previous)?previous:'';
+  renderLedger();
+}
+function renderLedger(){
+  let a=$('lacct').value,year=$('lyear').value,month=$('lmonth').value,b=0,rows=[];
+  if(!a){$('ledgerBody').innerHTML='';$('ledgerBalanceSummary').innerHTML='<div>LKR Balance – <b>0.00</b></div>';return}
+  let entries=[];
+  journals.forEach(j=>j.lines.forEach(l=>{
+    let x=lineForReport(j,l),parts=String(j.date||'').split('-'),y=parts[0],mo=String(+parts[1]||'');
+    if(x.account===a&&(!year||y===year)&&(!month||mo===month))entries.push({j,x});
+  }));
+  entries.sort((p,q)=>String(p.j.date).localeCompare(String(q.j.date))||String(p.j.jv).localeCompare(String(q.j.jv)));
+  entries.forEach(({j,x})=>{
+    b+=x.debitLKR-x.creditLKR;
+    rows.push([j.date,j.jv,x.project||x.subcode||'',j.description,x.debitLKR,x.creditLKR,b]);
+  });
+  const fmt=v=>Number(v||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+  $('ledgerBody').innerHTML=rows.map(r=>`<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td><td>${esc(r[2])}</td><td>${esc(r[3])}</td><td class="lkr">${fmt(r[4])}</td><td class="lkr">${fmt(r[5])}</td><td class="lkr">${fmt(r[6])}</td></tr>`).join('')||'<tr><td colspan="7">No transactions for the selected filters.</td></tr>';
+  $('ledgerBalanceSummary').innerHTML=`<div>LKR Balance – <b>${fmt(b)}</b></div>`;
+}
+
+function groupByType(){let m={};journals.forEach(j=>j.lines.forEach(l=>{let x=lineForReport(j,l),a=accounts.find(a=>a.name===x.account)||{};let t=reportAccountType(a);m[t]??={d:0,c:0,accounts:{}};m[t].d+=x.debitLKR;m[t].c+=x.creditLKR;m[t].accounts[x.account]??={d:0,c:0};m[t].accounts[x.account].d+=x.debitLKR;m[t].accounts[x.account].c+=x.creditLKR}));return m}
+function renderTB(){let m=groupByType(),html='';Object.entries(m).sort().forEach(([t,v])=>{html+=`<tr class="grouprow"><td>${esc(t)}</td><td>${v.d.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</td><td>${v.c.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</td><td>${(v.d-v.c).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</td></tr>`;Object.entries(v.accounts).sort().forEach(([a,x])=>html+=`<tr class="subrow"><td>↳ ${esc(a)}</td><td>${x.d.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</td><td>${x.c.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</td><td>${(x.d-x.c).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</td></tr>`)});$('tbBody').innerHTML=html||'<tr><td colspan="4">No transactions.</td></tr>'}
+function nature(a){return ((a.nature||'')+' '+(a.accountType||'')+' '+(a.subAccount||'')).toLowerCase()}
+function isInvestmentAccount(a){
+  return [a?.accountType,a?.subAccount,a?.nature].some(v=>String(v||'').toLowerCase().includes('investment'));
+}
+function reportAccountType(a){
+  return isInvestmentAccount(a)?'INVESTMENT':(a.accountType||'UNMAPPED');
+}
+function reportGroups(kind,year,month){let m={};journals.forEach(j=>{if(!periodMatch(j.date,year,month))return;j.lines.forEach(l=>{let x=lineForReport(j,l),a=accounts.find(a=>a.name===x.account)||{},n=nature(a);let investment=isInvestmentAccount(a);let ok=kind==='pl'?(n.includes('income')||n.includes('expense')):(investment||n.includes('asset')||n.includes('liabil')||n.includes('equity'));if(!ok)return;let t=reportAccountType(a);m[t]??={d:0,c:0,accounts:{}};m[t].d+=x.debitLKR;m[t].c+=x.creditLKR;m[t].accounts[x.account]??={d:0,c:0};m[t].accounts[x.account].d+=x.debitLKR;m[t].accounts[x.account].c+=x.creditLKR})});return m}
+function renderIS(){refreshProjectPickers();let y=+$('iy').value||currentYear(),project=$('im').value,m={},out='';journals.forEach(j=>{if(!periodMatch(j.date,y,null))return;j.lines.forEach(l=>{let x=lineForReport(j,l);if(project&&x.project!==project)return;let a=accounts.find(a=>a.name===x.account)||{},n=nature(a);if(!(n.includes('income')||n.includes('expense')))return;let t=reportAccountType(a);m[t]??={d:0,c:0,accounts:{}};m[t].d+=x.debitLKR;m[t].c+=x.creditLKR;m[t].accounts[x.account]??={d:0,c:0};m[t].accounts[x.account].d+=x.debitLKR;m[t].accounts[x.account].c+=x.creditLKR})});Object.entries(m).sort().forEach(([t,v])=>{out+=`<tr class="grouprow"><td>${esc(t)}</td><td>${v.d.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</td><td>${v.c.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</td><td>${(v.c-v.d).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</td></tr>`;Object.entries(v.accounts).sort().forEach(([a,x])=>out+=`<tr class="subrow"><td>↳ ${esc(a)}</td><td>${x.d.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</td><td>${x.c.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</td><td>${(x.c-x.d).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</td></tr>`)});$('isBody').innerHTML=out||'<tr><td colspan="4">No income/expense entries for this project.</td></tr>';let t=projectTotals(project);$('isNetRevenue').textContent=Number(t.profit).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}
+function renderBS(){let m=reportGroups('bs',currentYear(),null),html='';Object.entries(m).sort().forEach(([t,v])=>{html+=`<tr class="grouprow"><td>${esc(t)}</td><td>${v.d.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</td><td>${v.c.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</td><td>${(v.d-v.c).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</td></tr>`;Object.entries(v.accounts).sort().forEach(([a,x])=>html+=`<tr class="subrow"><td>↳ ${esc(a)}</td><td>${x.d.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</td><td>${x.c.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</td><td>${(x.d-x.c).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</td></tr>`)});$('bsBody').innerHTML=html||'<tr><td colspan="4">No balance-sheet entries for mapped accounts.</td></tr>'}
+function balanceSheetValidation(){
+  let assets=0,investments=0,liabilities=0,equity=0,income=0,expenses=0,y=currentYear();
+  journals.forEach(j=>{
+    if(!periodMatch(j.date,y,null))return;
+    j.lines.forEach(l=>{
+      let x=lineForReport(j,l),a=accounts.find(a=>a.name===x.account)||{},n=nature(a),bal=x.debitLKR-x.creditLKR;
+      if(isInvestmentAccount(a)) investments+=bal;
+      else if(n.includes('asset')) assets+=bal;
+      else if(n.includes('liabil')) liabilities+=-bal;
+      else if(n.includes('equity')) equity+=-bal;
+      else if(n.includes('income')) income+=-bal;
+      else if(n.includes('expense')) expenses+=bal;
+    });
+  });
+  return (assets+investments)-(liabilities+equity+(income-expenses));
+}
+function renderBSValidation(){
+  let diff=balanceSheetValidation(),display=Math.abs(diff)<0.005?0:diff;
+  $('bsValidationValue').textContent=display.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+  $('bsValidation').className='bs-validation'+(display!==0?' bad':'');
+}
+function addAccount(){
+  const n=$('an').value.trim();
+  if(!n){alert('Please enter an Individual Account name.');$('an').focus();return}
+  if(accounts.some(a=>String(a.name).trim().toLowerCase()===n.toLowerCase())){alert('This account already exists.');return}
+  const rec={name:n,accountType:$('at').value.trim(),subAccount:$('as').value.trim(),nature:$('anature').value.trim(),subCode:''};
+  try{accounts.push(rec);persist();$('an').value='';$('at').value='';$('as').value='';$('anature').value='';renderCOA();refreshProjectPickers();renderDashboardCharts();alert('Account saved successfully.')}
+  catch(e){accounts.pop();alert('Could not save account: '+e.message)}
+}
+function updateCOADatalists(){let fields=[['coaAccountTypeOptions','accountType'],['coaSubAccountOptions','subAccount'],['coaNatureOptions','nature']];fields.forEach(([id,key])=>{let values=[...new Set(accounts.map(a=>(a[key]||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b));$(id).innerHTML=values.map(v=>`<option value="${esc(v)}"></option>`).join('')})}
+
+function clearCOAForm(){['an','at','as','anature'].forEach(id=>{if($(id))$(id).value=''})}
+function addCOARecord(){addAccount()}
+function resetCOAMaster(){
+  if(!confirm('Remove all current COA records? This does not delete journal entries, but reports may be affected until accounts are recreated.'))return;
+  accounts.splice(0,accounts.length);persist();refresh();
+}
+
+function renderCOA(){updateCOADatalists();$('coaBody').innerHTML=accounts.map((a,i)=>`<tr id="coaRow${i}"><td>${esc(a.name)}</td><td>${esc(a.accountType)}</td><td>${esc(a.subAccount)}</td><td>${esc(a.nature)}</td><td><button class="btn secondary" onclick="editCOA(${i})">Edit</button></td></tr>`).join('')||'<tr><td colspan="5" class="muted">No accounts added yet.</td></tr>'}
+function editCOA(i){let a=accounts[i],r=$('coaRow'+i);if(!a||!r)return;r.innerHTML=`<td><input id="coaName${i}" value="${esc(a.name)}" style="min-width:150px"></td><td><input id="coaType${i}" list="coaAccountTypeOptions" value="${esc(a.accountType)}" placeholder="Select or type..." style="min-width:150px"></td><td><input id="coaSub${i}" list="coaSubAccountOptions" value="${esc(a.subAccount)}" placeholder="Select or type..." style="min-width:150px"></td><td><input id="coaNature${i}" list="coaNatureOptions" value="${esc(a.nature)}" placeholder="Select or type..." style="min-width:110px"></td><td><button class="btn primary" onclick="saveCOA(${i})">Save</button> <button class="btn secondary" onclick="renderCOA()">Cancel</button></td>`}
+function saveCOA(i){let a=accounts[i];if(!a)return;let newName=$('coaName'+i).value.trim();if(newName&&newName!==a.name){if(accounts.some((x,k)=>k!==i&&x.name===newName)){alert('That account name already exists.');return}let oldName=a.name;a.name=newName;journals.forEach(j=>j.lines.forEach(l=>{if(l.account===oldName)l.account=newName}));budgets.forEach(b=>{if(b.account===oldName)b.account=newName})}a.accountType=$('coaType'+i).value.trim();a.subAccount=$('coaSub'+i).value.trim();a.nature=$('coaNature'+i).value.trim();persist();refresh()}
+function saveCurrency(){let c=$('cn').value.trim().toUpperCase(),r=+$('cr').value;if(!c||!r)return;let x=currencies.find(x=>x.code===c);if(x)x.rate=r;else currencies.push({code:c,rate:r});persist();$('cn').value='';$('cr').value='';refresh()}
+function renderCurrency(){$('curBody').innerHTML=currencies.map(c=>`<tr><td>${c.code}</td><td>${c.rate}</td><td>${esc(c.source||'Manual')}</td></tr>`).join('');}
+function saveBudget(){let m=$('bm').value,a=$('ba').value,v=+$('bamt').value;if(!m||!a||!v)return;budgets.push({month:m,account:a,amount:v});persist();$('bamt').value='';refresh()}
+function renderBudget(){$('budgetBody').innerHTML=budgets.map(b=>`<tr><td>${b.month}</td><td>${esc(b.account)}</td><td>${b.amount.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</td></tr>`).join('')}
+
+
+function projectSelectOptions(selected=''){
+  const names=[...new Set([...projects.map(p=>p.name),...journals.flatMap(j=>(j.lines||[]).map(l=>l.project||l.subcode||''))].filter(Boolean))].sort();
+  return names.map(n=>`<option value="${esc(n)}" ${n===selected?'selected':''}>${esc(n)}</option>`).join('');
+}
+
+function projectNames(){return [...new Set([...(projects||[]).map(p=>p.name),...(journals||[]).flatMap(j=>(j.lines||[]).map(l=>l.project||l.subcode||''))].filter(Boolean))].sort()}
+function refreshProjectPickers(){let names=projectNames();['dy','im','trackingProject'].forEach(id=>{let el=$(id);if(!el)return;let old=el.value;el.innerHTML='<option value="">All Projects</option>'+names.map(p=>`<option value="${esc(p)}">${esc(p)}</option>`).join('');if(names.includes(old))el.value=old});let dl=$('projectOptions');if(dl)dl.innerHTML=names.map(p=>`<option value="${esc(p)}"></option>`).join('');document.querySelectorAll('.project-picker').forEach(sel=>{let val=sel.value;sel.innerHTML='<option value="">Select project</option>'+projectSelectOptions(val);sel.value=val})}
+function projectTotals(project){let inc=0,exp=0;journals.forEach(j=>j.lines.forEach(l=>{let x=lineForReport(j,l);if(project&&x.project!==project)return;let a=accounts.find(a=>a.name===x.account)||{},n=nature(a);if(n.includes('income'))inc+=x.creditLKR-x.debitLKR;else if(n.includes('expense'))exp+=x.debitLKR-x.creditLKR}));return {inc,exp,profit:inc-exp}}
+
+function clearProjectForm(){['projectName','projectArea','projectStatus','projectItems','projectStart'].forEach(id=>{if($(id))$(id).value=''})}
+function saveProject(){
+  const name=$('projectName').value.trim();
+  if(!name){alert('Please enter a Project Name.');$('projectName').focus();return}
+  const project={name,area:$('projectArea').value.trim(),status:$('projectStatus').value.trim(),items:$('projectItems').value.trim(),start:$('projectStart').value};
+  const existing=projects.findIndex(p=>String(p.name).toLowerCase()===name.toLowerCase());
+  const previous=existing>=0?projects[existing]:null;
+  try{
+    if(existing>=0)projects[existing]=project;else projects.push(project);
+    persist();clearProjectForm();refreshProjectPickers();renderProjectDetails();renderProjectTracking();
+    alert('Project saved successfully.');
+  }catch(e){
+    if(existing>=0)projects[existing]=previous;else projects.pop();
+    alert('Could not save project: '+e.message);
+  }
+}
+function editProject(i){const p=projects[i];if(!p)return;$('projectName').value=p.name||'';$('projectArea').value=p.area||'';$('projectStatus').value=p.status||'';$('projectItems').value=p.items||'';$('projectStart').value=p.start||''}
+function deleteProject(i){const p=projects[i];if(!p)return;if(!confirm('Delete project '+p.name+'? Existing journal entries will not be deleted.'))return;projects.splice(i,1);persist();refreshProjectPickers();renderProjectDetails();renderProjectTracking()}
+function renderProjectDetails(){
+  const body=$('projectBody');if(!body)return;
+  body.innerHTML=projects.map((p,i)=>`<tr><td>${esc(p.name)}</td><td>${esc(p.area||'')}</td><td>${esc(p.status||'')}</td><td>${esc(p.items||'')}</td><td>${esc(p.start||'')}</td><td><button type="button" class="btn secondary" onclick="editProject(${i})">Edit</button> <button type="button" class="btn danger" onclick="deleteProject(${i})">Delete</button></td></tr>`).join('')||'<tr><td colspan="6">No projects added yet.</td></tr>';
+}
+
+function renderProjectTracking(){refreshProjectPickers();let project=$('trackingProject').value,p=projects.find(x=>x.name===project)||{},t=projectTotals(project),fmt=v=>Number(v||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});$('projectInfo').innerHTML=`<div class="tablewrap"><table><thead><tr><th>Project Name</th><th>Area</th><th>Status of Land</th><th>Items of Cultivating</th><th>Date of Start</th></tr></thead><tbody><tr><td>${esc(p.name||project||'All Projects')}</td><td>${esc(p.area||'')}</td><td>${esc(p.status||'')}</td><td>${esc(p.items||'')}</td><td>${esc(p.start||'')}</td></tr></tbody></table></div>`;$('projectIncome').textContent=fmt(t.inc);$('projectExpenses').textContent=fmt(t.exp);$('projectProfit').textContent=fmt(t.profit);let rows={};journals.forEach(j=>j.lines.forEach(l=>{let x=lineForReport(j,l);if(project&&x.project!==project)return;let a=accounts.find(a=>a.name===x.account)||{},k=[a.accountType||'',a.subAccount||'',x.account].join('|');rows[k]??={type:a.accountType||'',sub:a.subAccount||'',account:x.account,total:0};rows[k].total+=x.debitLKR-x.creditLKR}));$('projectSummaryBody').innerHTML=Object.values(rows).map(x=>`<tr><td>${esc(project||'All Projects')}</td><td>${esc(x.type)}</td><td>${esc(x.sub)}</td><td>${esc(x.account)}</td><td>${fmt(x.total)}</td></tr>`).join('')||'<tr><td colspan="5">No transactions for this project.</td></tr>'}
+function printProjectTracking(){renderProjectTracking();const control=document.querySelector('#projecttracking .project-tracking-controls');if(control)control.setAttribute('data-project',$('trackingProject').value||'All Projects');window.print()}
+function printReport(sectionId){if(!['ledger','tb','is','bs'].includes(sectionId))return;refresh();window.print()}
+
+function renderSubCodes(){
+  let selectedYear=$('scYear').value,selectedMonth=$('scMonth').value,selectedCode=$('sf').value;
+  let yearsList=[...new Set(journals.map(j=>String(j.date||'').slice(0,4)).filter(y=>/^\d{4}$/.test(y)))].sort().reverse();
+  let yearSelect=$('scYear'),oldYear=selectedYear;
+  yearSelect.innerHTML='<option value="">All Years</option>'+yearsList.map(y=>`<option value="${y}">${y}</option>`).join('');
+  yearSelect.value=yearsList.includes(oldYear)?oldYear:'';
+  let codes=new Set();
+  accounts.forEach(a=>{if(a.subCode&&String(a.subCode).trim())codes.add(String(a.subCode).trim())});
+  journals.forEach(j=>j.lines.forEach(l=>{let x=lineForReport(j,l);if(x.subcode&&String(x.subcode).trim())codes.add(String(x.subcode).trim())}));
+  let codeList=[...codes].sort((a,b)=>a.localeCompare(b));
+  $('sf').innerHTML='<option value="">All Sub Codes</option>'+codeList.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join('');
+  $('sf').value=codeList.includes(selectedCode)?selectedCode:'';
+  let rows=[],net=0;
+  journals.forEach(j=>j.lines.forEach(l=>{
+    let x=lineForReport(j,l),parts=String(j.date||'').split('-'),year=parts[0]||'',month=String(+parts[1]||'');
+    if(x.subcode&&(!yearSelect.value||year===yearSelect.value)&&(!$('scMonth').value||month===$('scMonth').value)&&(!$('sf').value||x.subcode===$('sf').value)){
+      rows.push([j.date,j.jv,x.account,j.description||'',x.debitLKR,x.creditLKR]);net+=x.debitLKR-x.creditLKR;
+    }
+  }));
+  rows.sort((a,b)=>String(a[0]).localeCompare(String(b[0]))||String(a[1]).localeCompare(String(b[1])));
+  const fmt=v=>Number(v||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+  $('scNet').textContent=fmt(net);
+  $('scBody').innerHTML=rows.map(r=>`<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td><td>${esc(r[2])}</td><td>${esc(r[3])}</td><td class="lkr">${fmt(r[4])}</td><td class="lkr">${fmt(r[5])}</td></tr>`).join('')||'<tr><td colspan="6">No sub-code transactions for the selected filters.</td></tr>';
+  let dl=$('subCodeOptions');if(dl)dl.innerHTML=codeList.map(c=>`<option value="${esc(c)}"></option>`).join('');
+  renderSubCodeSheets();
+}
+function renderSubCodeSheets(){
+  const yearEl=$('scSheetsYear'),monthEl=$('scSheetsMonth'),codeEl=$('scSheetsCode');
+  const selectedYear=yearEl.value,selectedMonth=monthEl.value,selectedCode=codeEl.value;
+  const yearList=[...new Set(journals.map(j=>String(j.date||'').slice(0,4)).filter(y=>/^\d{4}$/.test(y)))].sort().reverse();
+  yearEl.innerHTML='<option value="">All Years</option>'+yearList.map(y=>`<option value="${y}">${y}</option>`).join('');
+  yearEl.value=yearList.includes(selectedYear)?selectedYear:'';
+  const codeSet=new Set();
+  accounts.forEach(a=>{if(a.subCode&&String(a.subCode).trim())codeSet.add(String(a.subCode).trim())});
+  journals.forEach(j=>j.lines.forEach(l=>{let x=lineForReport(j,l);if(x.subcode&&String(x.subcode).trim())codeSet.add(String(x.subcode).trim())}));
+  const codeList=[...codeSet].sort((a,b)=>a.localeCompare(b));
+  codeEl.innerHTML='<option value="">All Sub Codes</option>'+codeList.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join('');
+  codeEl.value=codeList.includes(selectedCode)?selectedCode:'';
+
+  const groups={};let net=0,transactionCount=0;
+  journals.forEach(j=>j.lines.forEach(l=>{
+    const x=lineForReport(j,l),code=String(x.subcode||'').trim();
+    if(!code)return;
+    const parts=String(j.date||'').split('-'),year=parts[0]||'',month=String(+parts[1]||'');
+    if((yearEl.value&&year!==yearEl.value)||(monthEl.value&&month!==monthEl.value)||(codeEl.value&&code!==codeEl.value))return;
+    groups[code]??=[];
+    groups[code].push({date:j.date,jv:j.jv,account:x.account,description:j.description||'',debit:x.debitLKR,credit:x.creditLKR});
+    net+=x.debitLKR-x.creditLKR;transactionCount++;
+  }));
+  const fmt=v=>Number(v||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+  $('scSheetsNet').textContent=fmt(net);
+  const codes=Object.keys(groups).sort((a,b)=>a.localeCompare(b));
+  $('subCodeCount').textContent=`${codes.length} sub code(s) · ${transactionCount} transaction(s)`;
+  $('subCodeSheets').innerHTML=codes.map(code=>{
+    const rs=groups[code],d=rs.reduce((sum,r)=>sum+r.debit,0),c=rs.reduce((sum,r)=>sum+r.credit,0);
+    rs.sort((a,b)=>String(a.date).localeCompare(String(b.date))||String(a.jv).localeCompare(String(b.jv)));
+    return `<div class="card" style="margin-top:10px">
+      <div class="rowhead"><h3 style="margin:0">Sub Code: ${esc(code)}</h3><span class="badge">${rs.length} transaction(s)</span></div>
+      <div class="totals"><div class="total">Total Debit<br><b>${fmt(d)}</b></div><div class="total">Total Credit<br><b>${fmt(c)}</b></div></div>
+      <div class="tablewrap" style="margin-top:10px"><table><thead><tr><th>Date</th><th>JV No</th><th>Account</th><th>Description</th><th>Debit LKR</th><th>Credit LKR</th></tr></thead>
+      <tbody>${rs.map(r=>`<tr><td>${esc(r.date)}</td><td>${esc(r.jv)}</td><td>${esc(r.account)}</td><td>${esc(r.description)}</td><td class="lkr">${fmt(r.debit)}</td><td class="lkr">${fmt(r.credit)}</td></tr>`).join('')}</tbody></table></div></div>`;
+  }).join('')||'<p class="muted">No sub-code transactions for the selected filters.</p>';
+}
+function pieData(kind,year,month){
+  let m={};
+  journals.forEach(j=>{
+    if(!periodMatch(j.date,year,month))return;
+    j.lines.forEach(l=>{
+      let x=lineForReport(j,l),a=accounts.find(a=>a.name===x.account)||{},n=nature(a),v=0;
+      if(kind==='income'&&n.includes('income'))v=x.creditLKR-x.debitLKR;
+      else if(kind==='expense'&&n.includes('expense'))v=x.debitLKR-x.creditLKR;
+      else if(kind==='typeExpense'&&n.includes('expense'))v=x.debitLKR-x.creditLKR;
+      if(v>0){
+        let key=(kind==='typeExpense')?reportAccountType(a):x.account;
+        m[key]=(m[key]||0)+v;
+      }
+    });
+  });
+  return Object.entries(m).sort((a,b)=>b[1]-a[1]);
+}
+function incomeExpenseChartData(year,month){
+  let t=incomeExpenseTotals(year,month),arr=[];
+  if(t.inc>0)arr.push(['Income',t.inc]);
+  if(t.exp>0)arr.push(['Expenses',t.exp]);
+  return arr;
+}
+function incomeUseData(year,month){
+  let inc=incomeExpenseTotals(year,month).inc,exp=incomeExpenseTotals(year,month).exp,investment=0;
+  journals.forEach(j=>{
+    if(!periodMatch(j.date,year,month))return;
+    j.lines.forEach(l=>{
+      let x=lineForReport(j,l),a=accounts.find(a=>a.name===x.account)||{};
+      if(isInvestmentAccount(a))investment+=Math.max(0,x.debitLKR-x.creditLKR);
+    });
+  });
+  investment=Math.min(investment,Math.max(0,inc-exp));
+  let saving=Math.max(0,inc-exp-investment),arr=[];
+  if(exp>0)arr.push(['Expenses',exp]);
+  if(investment>0)arr.push(['Investment',investment]);
+  if(saving>0)arr.push(['Saving',saving]);
+  return arr;
+}
+function renderPie(elId,legendId,data,colorMap){
+  let total=data.reduce((s,x)=>s+x[1],0),start=0,parts=[],html='';
+  const colors=window.REQUESTED_CHART_PALETTE;
+  data.forEach((x,i)=>{
+    let deg=x[1]/total*360,c=colorMap&&colorMap[x[0]]?colorMap[x[0]]:colors[i%colors.length];
+    parts.push(`${c} ${start}deg ${start+deg}deg`);start+=deg;
+    let pct=total?(x[1]/total*100):0;
+    html+=`<span><i style="background:${c}"></i>${esc(x[0])}: ${x[1].toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})} (${pct.toFixed(0)}%)</span>`;
+  });
+  $(elId).style.background=total?`conic-gradient(${parts.join(',')})`:'#e2e8f0';
+  $(legendId).innerHTML=html||'<span>No data</span>';
+}
+function populateHistTypes(){let sel=$('histType'),current=sel.value;let types=[...new Set(accounts.map(a=>reportAccountType(a)).map(x=>(x||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b));sel.innerHTML='<option value="">All Account Types</option>'+types.map(t=>`<option value="${esc(t)}">${esc(t)}</option>`).join('');if(types.includes(current))sel.value=current;else if(current==='')sel.value='';}
+function renderHistogram(year,month){let type=$('histType').value,m={};journals.forEach(j=>{if(!periodMatch(j.date,year,month))return;j.lines.forEach(l=>{let x=lineForReport(j,l),a=accounts.find(a=>a.name===x.account)||{},accountType=reportAccountType(a).trim();if(type&&accountType!==type)return;let n=nature(a),v=0;if(n.includes('income'))v=x.creditLKR-x.debitLKR;else if(n.includes('expense'))v=x.debitLKR-x.creditLKR;else v=Math.abs(x.debitLKR-x.creditLKR);if(v>0)m[x.account]=(m[x.account]||0)+v})});let arr=Object.entries(m).sort((a,b)=>b[1]-a[1]),max=Math.max(1,...arr.map(x=>x[1]));$('histBars').innerHTML=arr.map(([a,v])=>`<div class="barcol"><div class="barval">${v.toFixed(0)}</div><div class="bar" style="height:${Math.max(3,v/max*150)}px;background:#2563EB"></div><div>${esc(a)}</div></div>`).join('')||'<span class="muted">No data for this account type.</span>'}
+function dashboardBalanceTotals(){
+  let assets=0,investments=0,liabilities=0,equity=0,income=0,expenses=0,y=currentYear();
+  journals.forEach(j=>{if(!periodMatch(j.date,y,null))return;j.lines.forEach(l=>{
+    let x=lineForReport(j,l),a=accounts.find(a=>a.name===x.account)||{},n=nature(a),bal=x.debitLKR-x.creditLKR;
+    if(isInvestmentAccount(a))investments+=bal;
+    else if(n.includes('asset'))assets+=bal;
+    else if(n.includes('liabil'))liabilities+=-bal;
+    else if(n.includes('equity'))equity+=-bal;
+    else if(n.includes('income'))income+=-bal;
+    else if(n.includes('expense'))expenses+=bal;
+  });});
+  return {assets:assets+investments,liabilitiesEquity:liabilities+equity+(income-expenses)};
+}
+function balanceSheetTotals(){let assets=0,liabilities=0,equity=0,inc=0,exp=0;journals.forEach(j=>j.lines.forEach(l=>{let x=lineForReport(j,l),a=accounts.find(a=>a.name===x.account)||{},n=nature(a),bal=x.debitLKR-x.creditLKR;if(n.includes('asset')||n.includes('investment'))assets+=bal;else if(n.includes('liabilit'))liabilities-=bal;else if(n.includes('equity'))equity-=bal;else if(n.includes('income'))inc+=x.creditLKR-x.debitLKR;else if(n.includes('expense'))exp+=x.debitLKR-x.creditLKR}));return {assets,liabilities,equity,netIncome:inc-exp}}
+function renderDashboardCharts(){refreshProjectPickers();let project=$('dy').value,t=projectTotals(project),fmt=v=>Number(v||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});$('dashPeriod').textContent=project||'All Projects';let bs=balanceSheetTotals?balanceSheetTotals():null;if(bs){$('dashTotalAssets').textContent=fmt(bs.assets||0);$('dashTotalLiabEquity').textContent=fmt((bs.liabilities||0)+(bs.equity||0)+(bs.netIncome||0))}else{$('dashTotalAssets').textContent=fmt(0);$('dashTotalLiabEquity').textContent=fmt(0)}$('dashTotalIncome').textContent=fmt(t.inc);$('dashTotalExpenses').textContent=fmt(t.exp);$('dashProfitLoss').textContent=fmt(t.profit);$('dashProjectIncome').textContent=fmt(t.inc);$('dashProjectExpenses').textContent=fmt(t.exp);$('dashProjectPL').textContent=fmt(t.profit);let total=t.inc+t.exp,ip=total?t.inc/total*100:0;$('incomePie').style.background=`conic-gradient(#38bdf8 0 ${ip}%,#f97316 ${ip}% 100%)`;$('incomeLegend').innerHTML=`<div>Income: ${fmt(t.inc)}</div><div>Expenses: ${fmt(t.exp)}</div>`;$('expensePie').style.background='conic-gradient(#f97316 0 100%,#e2e8f0 100% 100%)';$('expenseLegend').innerHTML=`<div>Expenses: ${fmt(t.exp)}</div>`;$('typeIncPie').style.background=`conic-gradient(#22c55e 0 ${ip}%,#e2e8f0 ${ip}% 100%)`;$('typeIncLegend').innerHTML=`<div>Income: ${fmt(t.inc)}</div>`;$('typeExpPie').style.background='conic-gradient(#f97316 0 100%,#e2e8f0 100% 100%)';$('typeExpLegend').innerHTML=`<div>Expenses: ${fmt(t.exp)}</div>`;$('histBars').innerHTML=''}
+function refresh(){
+  let previousType=$('ltype').value,types=[...new Set(accounts.map(a=>reportAccountType(a)))].sort();
+  $('ltype').innerHTML='<option value="">All Account Types</option>'+types.map(t=>'<option value="'+esc(t)+'">'+esc(t)+'</option>').join('');
+  $('ltype').value=types.includes(previousType)?previousType:'';
+  let o='<option value="">Select account</option>'+accounts.map(a=>'<option value="'+esc(a.name)+'">'+esc(a.name)+'</option>').join('');
+  $('lacct').innerHTML=o;$('ba').innerHTML=o;filterLedgerAccounts();renderHistory();renderJVReview();renderLedger();renderTB();renderIS();renderBS();renderBSValidation();renderCOA();renderCurrency();renderBudget();renderSubCodes();renderProjectDetails();refreshProjectPickers();renderProjectTracking();fillYears();renderDashboardCharts();}
+function exportCSV(){let rows=[['JV Number','Date','Description','Reference','Individual Account','Project Name','Currency','Rate To LKR','Side','Amount','Amount']];journals.forEach(j=>j.lines.forEach(l=>{let x=lineForReport(j,l);rows.push([j.jv,j.date,j.description,j.reference,x.account,x.subcode,x.currency,x.rate,x.side,x.amount,x.lkr])}));let s=rows.map(r=>r.map(x=>'"'+String(x??'').replaceAll('"','""')+'"').join(',')).join('\n');let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([s],{type:'text/csv'}));a.download='mobile_journal_export.csv';a.click()}
+initBackupPanel();initAuth();if(sessionStorage.getItem('appUnlocked')==='1')$('login').style.display='none';$('jdate').value=new Date().toISOString().slice(0,10);$('jdate').onchange=setJV;$('iy').value=currentYear();addLine();addLine();setJV();refresh();$('dy').onchange=renderDashboardCharts;$('iy').onchange=renderIS;$('im').onchange=renderIS;if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js');
+</script></body></html>
